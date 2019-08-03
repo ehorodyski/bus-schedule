@@ -14,6 +14,15 @@ Since Angular 4 a lot of improvements have been made to the Angular compiler to 
 
 Angular does not advise using their online updater across multiple major versions. In order to update the app, we used a fresh angular project as a base.
 
+1. Update Package.json
+2. Run ng update
+3. Update addt. dependencies
+
+      Name                               Version                  Command to update
+     --------------------------------------------------------------------------------
+      @angular/cli                       8.0.6 -> 8.2.0           ng update @angular/cli
+      @angular/core                      8.0.3 -> 8.2.0           ng update @angular/core
+      rxjs                               6.4.0 -> 6.5.2           ng update rxjs
 
 Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
 
