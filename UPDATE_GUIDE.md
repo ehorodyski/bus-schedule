@@ -24,6 +24,8 @@ Angular does not advise using their online updater across multiple major version
       @angular/core                      8.0.3 -> 8.2.0           ng update @angular/core
       rxjs                               6.4.0 -> 6.5.2           ng update rxjs
 
+4.
+
 Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
 
 **Development Note:** Please ensure to re-run the `npm install` the existing Angular 4 version of BusSchedule resides locally on your machine.
