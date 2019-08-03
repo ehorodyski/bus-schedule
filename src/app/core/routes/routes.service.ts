@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import 'rxjs/add/operator/map';
+//import 'rxjs/add/operator/map';
 import { parseString } from 'xml2js';
 
 import { environment } from '../../../environments/environment';
@@ -17,13 +17,13 @@ export class RoutesService {
   }
 
   refresh(agency: string): void {
-    this.http.get(environment.dataServiceUrl, {
-      params: {
-        command: 'routeList',
-        a: agency
-      }
-    }).map(res => res.text())
-      .subscribe(xml => this.unpackXML(xml));
+    // this.http.get(environment.dataServiceUrl, {
+    //   params: {
+    //     command: 'routeList',
+    //     a: agency
+    //   }
+    // }).map(res => res.text())
+    //   .subscribe(xml => this.unpackXML(xml));
   }
 
   private unpackXML(xml: string) {

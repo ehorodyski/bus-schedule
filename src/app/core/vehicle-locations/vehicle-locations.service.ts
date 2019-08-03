@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+//import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs';
 import { parseString } from 'xml2js';
 
@@ -17,14 +17,14 @@ export class VehicleLocationsService {
   }
 
   refresh(agency: string, since?: number): void {
-    this.http.get(environment.dataServiceUrl, {
-      params: {
-        command: 'vehicleLocations',
-        a: agency,
-        t: since || 0
-      }
-    }).map(res => res.text())
-      .subscribe(xml => this.unpackXML(xml));
+    // this.http.get(environment.dataServiceUrl, {
+    //   params: {
+    //     command: 'vehicleLocations',
+    //     a: agency,
+    //     t: since || 0
+    //   }
+    // }).map(res => res.text())
+    //   .subscribe(xml => this.unpackXML(xml));
   }
 
   private unpackXML(xml: string) {
