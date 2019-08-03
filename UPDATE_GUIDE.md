@@ -1,0 +1,18 @@
+#  Guide
+
+This guide will walk through the process of how the [BusSchdeule](README.md) web application has been Updated from Angular 4 to Angular 8. Additionally, as part of the update process, [NgRx](https://ngrx.io/) has been added and introduced into the application in order to better maintain application state, providing a better end-user experience.
+
+### Why Update?
+
+Since Angular 4 a lot of improvements have been made to the Angular compiler to make it faster, as well as general improvements to the Angular framework and it's core features: such as a better networking module, an improved build system, and richer command-line interface that allows for easier generation of components, modules, and additional development improvements.
+
+### Why NgRx?
+
+[NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. _Reactive programming_ is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
+
+## Upgrading to Angular 8
+
+Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
+
+**Development Note:** Please ensure to re-run the `npm install` the existing Angular 4 version of BusSchedule resides locally on your machine.
+
