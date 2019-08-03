@@ -29,7 +29,6 @@ export class VehicleLocationsService {
 
   private unpackXML(xml: string) {
     parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
-      console.log('VL:', result);
       this.data.next({
         lastTime: parseInt(result.body.lastTime.time, 10),
         locations: !result.body.vehicle ? [] :

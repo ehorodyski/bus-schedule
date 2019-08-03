@@ -28,7 +28,6 @@ export class RoutesService {
 
   private unpackXML(xml: string) {
     parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
-      console.log(result);
       this.data.next(
         !result.body.route ? [] :
           Array.isArray(result.body.route) ? result.body.route : [result.body.route]
