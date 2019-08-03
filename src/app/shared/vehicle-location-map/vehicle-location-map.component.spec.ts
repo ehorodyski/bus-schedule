@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 import { RouteOptionsService } from '../../core/route-options/route-options.service';
@@ -35,12 +35,12 @@ describe('VehicleLocationMapComponent', () => {
           BOUNCE: 1,
           DROP: 2
         },
-        LatLng: function() { },
-        Map: function() { },
+        LatLng: function () { },
+        Map: function () { },
         MapTypeId: {
           ROADMAP: 1
         },
-        Marker: function() { }
+        Marker: function () { }
       }
     };
   });

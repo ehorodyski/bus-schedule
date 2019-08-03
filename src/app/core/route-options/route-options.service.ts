@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class RouteOptionsService {
   constructor(private localStorage: LocalStorageService) {
     this.options = this.localStorage.get('routeOptions') || {};
     this.changedOptions = new Subject();
-   }
+  }
 
   hideRoute(agency: string, route: string | Array<string>): void {
     const routes = Array.isArray(route) ? route : [route];
@@ -27,7 +27,7 @@ export class RouteOptionsService {
     return this.options[agency] && this.options[agency][route];
   }
 
-  private setRouteVisibility(agency: string, routes: Array< string>, visible: boolean): void {
+  private setRouteVisibility(agency: string, routes: Array<string>, visible: boolean): void {
     this.options[agency] = this.options[agency] || {};
     routes.forEach(route => this.options[agency][route] = visible);
     this.changedOptions.next(routes.map<{ agency: string, route: string }>(r => ({ agency: agency, route: r })));
