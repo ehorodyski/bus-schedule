@@ -12,7 +12,14 @@ Since Angular 4 a lot of improvements have been made to the Angular compiler to 
 
 ## Upgrading to Angular 8
 
+Angular does not advise using their online updater across multiple major versions. In order to update the app, we used a fresh angular project as a base.
+
+
 Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
 
 **Development Note:** Please ensure to re-run the `npm install` the existing Angular 4 version of BusSchedule resides locally on your machine.
 
+
+### Steps Taken
+
+1. `HttpModule` and the `Http` service have been switched to `HttpClientModule` and the `HttpClient` service. `HttpClient` reduces boiler-plate code (no need to map to JSON anymore) and supports typed return values and interceptors. ([Additional information on `HttpClient`](https://angular.io/guide/http)) TODO!
