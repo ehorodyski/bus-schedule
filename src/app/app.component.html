@@ -3,13 +3,14 @@
     <bus-route-list [routes]="routes"></bus-route-list>
   </mat-sidenav>
 
-  <mat-toolbar color="primary">
-    <button class="bus-icon-button" (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button> Bus Locations
-    <span class="bus-toolbar-filler"></span>
-  </mat-toolbar>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="bus-icon-button" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="bus-toolbar-filler">Bus Locations</span>
+    </mat-toolbar>
 
-  <bus-vehicle-location-map></bus-vehicle-location-map>
-
+    <bus-vehicle-location-map></bus-vehicle-location-map>
+  </mat-sidenav-content>
 </mat-sidenav-container>

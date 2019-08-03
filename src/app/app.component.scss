@@ -16,7 +16,7 @@
   filter: none;
   font-weight: normal;
   height: auto;
-  line-height: inherit;
+  line-height: 1;
   margin: 0;
   min-width: 0;
   padding: 0;
@@ -24,7 +24,7 @@
   text-decoration: none;
 }
 
-.bus-icon-button md-icon {
+.bus-icon-button mat-icon {
   padding: 0 14px 0 14px;
   color: white;
 }
