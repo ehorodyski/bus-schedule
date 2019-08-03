@@ -10,6 +10,7 @@ import { Route } from './route';
 @Injectable()
 export class RoutesService {
 
+  ///TODO: MOVE THIS TO NGRX
   data: Subject<Array<Route>>;
 
   constructor(private http: HttpClient) {
