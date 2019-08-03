@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 //import 'rxjs/add/operator/map';
 import { parseString } from 'xml2js';
@@ -18,17 +18,18 @@ export class RoutesService {
   }
 
   refresh(agency: string): void {
-    // this.http.get(environment.dataServiceUrl, {
-    //   params: {
-    //     command: 'routeList',
-    //     a: agency
-    //   }
-    // }).map(res => res.text())
-    //   .subscribe(xml => this.unpackXML(xml));
+    this.http.get(environment.dataServiceUrl, {
+      responseType: 'text',
+      params: {
+        command: 'routeList',
+        a: agency
+      }
+    }).subscribe(xml => this.unpackXML(xml));
   }
 
   private unpackXML(xml: string) {
     parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
+      console.log(result);
       this.data.next(
         !result.body.route ? [] :
           Array.isArray(result.body.route) ? result.body.route : [result.body.route]
