@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs';
 import { parseString } from 'xml2js';
 
@@ -10,25 +9,27 @@ import { VehicleLoctationsResponse } from './vehicle-locations-response';
 @Injectable()
 export class VehicleLocationsService {
 
+  ///TODO: MOVE THIS TO NGRX
   data: Subject<VehicleLoctationsResponse>;
 
   constructor(private http: HttpClient) {
     this.data = new Subject();
   }
 
-  refresh(agency: string, since?: number): void {
-    // this.http.get(environment.dataServiceUrl, {
-    //   params: {
-    //     command: 'vehicleLocations',
-    //     a: agency,
-    //     t: since || 0
-    //   }
-    // }).map(res => res.text())
-    //   .subscribe(xml => this.unpackXML(xml));
+  refresh(agency: string, since: number = 0): void {
+    this.http.get(environment.dataServiceUrl, {
+      responseType: 'text',
+      params: {
+        command: 'vehicleLocations',
+        a: agency,
+        t: since.toString()
+      }
+    }).subscribe(xml => this.unpackXML(xml));
   }
 
   private unpackXML(xml: string) {
     parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
+      console.log('VL:', result);
       this.data.next({
         lastTime: parseInt(result.body.lastTime.time, 10),
         locations: !result.body.vehicle ? [] :
