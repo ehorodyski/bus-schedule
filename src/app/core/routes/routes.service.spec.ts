@@ -1,4 +1,4 @@
-import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
+import { HttpClient, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { RoutesService } from './routes.service';

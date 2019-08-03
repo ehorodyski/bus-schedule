@@ -28,6 +28,9 @@ Angular does not advise using their online updater across multiple major version
 5.Go through each file and update
 6. Create Material Angular module
 
+TODO:
+1. Update tests
+
 Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
 
 **Development Note:** Please ensure to re-run the `npm install` the existing Angular 4 version of BusSchedule resides locally on your machine.

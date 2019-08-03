@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { parseString } from 'xml2js';
@@ -12,7 +12,7 @@ export class RoutesService {
 
   data: Subject<Array<Route>>;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     this.data = new Subject();
   }
 
