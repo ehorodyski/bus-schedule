@@ -15,7 +15,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     CoreModule,
     AngularMaterialModule,
-    LocalStorageModule.withConfig({
+    LocalStorageModule.forRoot({
       prefix: 'bus-sched',
       storageType: 'localStorage'
     }),
