@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatCheckboxModule, MdListModule } from '@angular/material';
 
+import { AngularMaterialModule } from '../../material.module';
 import { RouteItemComponent } from './route-item/route-item.component';
 import { RouteListComponent } from './route-list.component';
 
@@ -17,8 +17,7 @@ describe('RouteListComponent', () => {
       ],
       imports: [
         FormsModule,
-        MatCheckboxModule,
-        MdListModule
+        AngularMaterialModule
       ]
     }).compileComponents();
   }));

@@ -1,8 +1,8 @@
 import { TestBed, async } from '@angular/core/testing';
-import { MdIconModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 import { AppComponent } from './app.component';
+import { AngularMaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,9 +19,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         CoreModule,
-        MdIconModule,
-        MdSidenavModule,
-        MdToolbarModule,
+        AngularMaterialModule,
         SharedModule
       ],
       providers: [

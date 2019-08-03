@@ -25,6 +25,8 @@ Angular does not advise using their online updater across multiple major version
       rxjs                               6.4.0 -> 6.5.2           ng update rxjs
 
 4.Update angular-2-local-storage
+5.Go through each file and update
+6. Create Material Angular module
 
 Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
 

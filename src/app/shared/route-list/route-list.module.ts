@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatCheckboxModule, MdListModule } from '@angular/material';
 
+import { AngularMaterialModule } from '../../material.module';
 import { RouteListComponent } from './route-list.component';
 import { RouteItemComponent } from './route-item/route-item.component';
 
@@ -10,8 +10,7 @@ import { RouteItemComponent } from './route-item/route-item.component';
   imports: [
     CommonModule,
     FormsModule,
-    MatCheckboxModule,
-    MdListModule
+    AngularMaterialModule
   ],
   exports: [RouteListComponent],
   declarations: [RouteListComponent, RouteItemComponent]

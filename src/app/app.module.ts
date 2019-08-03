@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MdIconModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
 import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { AppComponent } from './app.component';
+import { AngularMaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -14,13 +14,11 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     CoreModule,
+    AngularMaterialModule,
     LocalStorageModule.withConfig({
       prefix: 'bus-sched',
       storageType: 'localStorage'
     }),
-    MdIconModule,
-    MdSidenavModule,
-    MdToolbarModule,
     SharedModule
   ],
   providers: [],
