@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // this.routes.forEach(route => this.routeOptions.showRoute('sf-muni', route.tag));
     });
     this.routesService.refresh('sf-muni');
-    this.store.dispatch(RoutesActions.refresh({ test: true }));
+    this.store.dispatch(RoutesActions.refresh({ agency: 'sf-muni' }));
   }
 
   ngOnDestroy() {

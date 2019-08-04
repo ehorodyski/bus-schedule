@@ -1,3 +1,6 @@
 import { props, createAction } from '@ngrx/store';
+import { Route } from '../routes/route';
 
-export const refresh = createAction('[Routes] Refresh', props<{ test: boolean }>());
+export const refresh = createAction('[Routes] Refresh', props<{ agency: string }>());
+export const refreshSuccess = createAction('[Routes] Refresh Success', props<{ routes: Array<Route> }>());
+export const refreshFailure = createAction('[Routes] RefreshFailure', props<{ error: any }>());

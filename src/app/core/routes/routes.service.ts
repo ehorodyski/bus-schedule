@@ -34,7 +34,7 @@ export class RoutesService {
     });
   }
 
-  private sortRoutes(routes: Route[]): Route[] {
+  private sortRoutes(routes: Array<Route>): Array<Route> {
     return routes.sort((a: Route, b: Route) => {
       if (a.title < b.title) { return -1; }
       if (a.title > b.title) { return 1; }
