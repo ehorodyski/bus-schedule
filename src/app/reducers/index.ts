@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 import {
   ActionReducer,
   ActionReducerMap,
@@ -7,14 +9,19 @@ import {
   Action
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+import * as fromRoutes from '../core/reducers/routes.reducers';
 
 export interface State {
-
+  [fromRoutes.routesFeatureKey]: fromRoutes.State
 }
 
-export const reducers: ActionReducerMap<State> = {
-
-};
+export const reducers = new InjectionToken<ActionReducerMap<State, Action>>(
+  'Root reducers token', {
+    factory: () => ({
+      [fromRoutes.routesFeatureKey]: fromRoutes.reducer
+    })
+  }
+);
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return (state: State, action: Action) => {
