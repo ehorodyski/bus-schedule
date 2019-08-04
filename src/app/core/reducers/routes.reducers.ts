@@ -1,6 +1,6 @@
 import { createReducer, on, createSelector } from '@ngrx/store';
 import { RoutesActions } from '../actions';
-import { Route } from '../routes/route';
+import { Route } from '../models/route';
 
 export const routesFeatureKey = 'routes';
 

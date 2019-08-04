@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { parseString } from 'xml2js';
 
 import { environment } from '../../../environments/environment';
-import { VehicleLoctationsResponse } from './vehicle-locations-response';
+import { VehicleLoctationsResponse } from '../models/vehicle-locations-response';
 
 @Injectable()
 export class VehicleLocationsService {

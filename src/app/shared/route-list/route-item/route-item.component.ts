@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { RouteOptionsService } from '../../../core/route-options/route-options.service';
-import { Route } from '../../../core/routes/route';
+import { RouteOptionsService } from '../../../core/services/route-options.service';
+import { Route } from '../../../core/models/route';
 
 @Component({
   selector: 'bus-route-item',

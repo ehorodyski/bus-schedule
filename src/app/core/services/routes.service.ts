@@ -5,7 +5,7 @@ import { flatMap } from 'rxjs/operators';
 import { parseString } from 'xml2js';
 
 import { environment } from '../../../environments/environment';
-import { Route } from './route';
+import { Route } from '../models/route';
 
 @Injectable()
 export class RoutesService {

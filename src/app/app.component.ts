@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 
-import { Route } from './core/routes/route';
+import { Route } from './core/models/route';
 import * as fromRoot from '../app/reducers';
 import { RoutesActions } from './core/actions';
 

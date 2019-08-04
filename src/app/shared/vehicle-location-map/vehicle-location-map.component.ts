@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { MarkerCollection } from './marker-collection';
-import { RouteOptionsService } from '../../core/route-options/route-options.service';
-import { VehicleLocationsService } from '../../core/vehicle-locations/vehicle-locations.service';
+import { RouteOptionsService } from '../../core/services/route-options.service';
+import { VehicleLocationsService } from '../../core/services/vehicle-locations.service';
 
 declare var google: any;
 

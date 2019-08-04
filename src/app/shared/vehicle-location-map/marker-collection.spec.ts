@@ -1,5 +1,5 @@
 import { MarkerCollection } from './marker-collection';
-import { VehicleLocation } from '../../core/vehicle-locations/vehicle-location';
+import { VehicleLocation } from '../../core/models/vehicle-location';
 
 class MarkerMock {
   setAnimation() { }
@@ -19,12 +19,12 @@ describe('MarkerCollection', () => {
           BOUNCE: 1,
           DROP: 2
         },
-        LatLng: function() { },
-        Map: function() { },
+        LatLng: function () { },
+        Map: function () { },
         MapTypeId: {
           ROADMAP: 1
         },
-        Marker: function() { }
+        Marker: function () { }
       }
     };
   });

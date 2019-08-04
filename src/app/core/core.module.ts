@@ -4,9 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
-import { RouteOptionsService } from './route-options/route-options.service';
-import { RoutesService } from './routes/routes.service';
-import { VehicleLocationsService } from './vehicle-locations/vehicle-locations.service';
+import { RouteOptionsService } from './services/route-options.service';
+import { RoutesService } from './services/routes.service';
+import { VehicleLocationsService } from './services/vehicle-locations.service';
 
 @NgModule({
   imports: [
