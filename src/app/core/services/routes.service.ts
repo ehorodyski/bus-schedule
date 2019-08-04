@@ -12,7 +12,7 @@ export class RoutesService {
 
   constructor(private http: HttpClient) { }
 
-  refresh(agency: string): Observable<any> {
+  refresh(agency: string): Observable<Route[]> {
     return this.http.get(environment.dataServiceUrl, {
       responseType: 'text',
       params: {
@@ -22,10 +22,11 @@ export class RoutesService {
     }).pipe(flatMap(xml => this.unpackXML(xml)));
   }
 
-  private unpackXML(xml: string): any {
+  private unpackXML(xml: string): Observable<Route[]> {
     return new Observable<Array<Route>>(obs => {
       parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
-        const routes = !result.body.route ? [] : Array.isArray(result.body.route) ? result.body.route : [result.body.route];
+        const routes = !result.body.route ? [] :
+          Array.isArray(result.body.route) ? result.body.route : [result.body.route];
         obs.next(this.sortRoutes(routes));
         obs.complete();
       });

@@ -59,8 +59,8 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   //TODO: NGRX Action
   private subscribeToVehicleData() {
     this.vehicleSubscription = this.vehicleLocations.data.subscribe(locs => this.buildMarkers(locs));
-    this.vehicleLocations.refresh('sf-muni');
-    this.interval = setInterval(() => this.vehicleLocations.refresh('sf-muni'), 15000);
+    this.vehicleLocations.refreshOld('sf-muni');
+    this.interval = setInterval(() => this.vehicleLocations.refreshOld('sf-muni'), 15000);
   }
 
 }
