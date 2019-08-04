@@ -30,6 +30,8 @@ Angular does not advise using their online updater across multiple major version
 7.  Refactor to get back working
 7. Mark NGRX spots
 8. ng add @ngrx/store
+9. Document @ngrx folder structure best practices
+10. Mention barrels
 
 
 TODO:
