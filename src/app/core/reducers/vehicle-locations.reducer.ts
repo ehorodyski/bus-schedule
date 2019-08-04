@@ -13,7 +13,7 @@ export interface State {
 
 const initialState: State = {
   error: undefined,
-  lastTime: undefined,
+  lastTime: 0,
   loading: false,
   locations: []
 }

@@ -27,7 +27,7 @@ export class VehicleLocationsEffects {
         )
       )),
       switchMap(([action, agency, since]) =>
-        this.vehicleLocationsService.refresh(agency, since || 0).pipe(
+        this.vehicleLocationsService.refresh(agency, since).pipe(
           map(({ lastTime, locations }) => VehicleLocationsActions.refreshSuccess({ lastTime, locations })),
           catchError(error => of(VehicleLocationsActions.refreshFailure({ error })))
         )
