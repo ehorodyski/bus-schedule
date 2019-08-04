@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { AngularMaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,14 @@ import { SharedModule } from './shared/shared.module';
       prefix: 'bus-sched',
       storageType: 'localStorage'
     }),
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

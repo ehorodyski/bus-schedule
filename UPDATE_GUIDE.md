@@ -27,6 +27,10 @@ Angular does not advise using their online updater across multiple major version
 4.Update angular-2-local-storage
 5.Go through each file and update
 6. Create Material Angular module
+7.  Refactor to get back working
+7. Mark NGRX spots
+8. ng add @ngrx/store
+
 
 TODO:
 1. Update tests
