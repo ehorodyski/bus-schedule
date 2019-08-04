@@ -56,6 +56,7 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
           this.markers.hide(change.route)));
   }
 
+  //TODO: NGRX Action
   private subscribeToVehicleData() {
     this.vehicleSubscription = this.vehicleLocations.data.subscribe(locs => this.buildMarkers(locs));
     this.vehicleLocations.refresh('sf-muni');
