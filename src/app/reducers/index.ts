@@ -9,7 +9,7 @@ import {
   Action
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
-import * as fromRoutes from '../core/reducers/routes.reducers';
+import * as fromRoutes from '../core/reducers/routes.reducer';
 
 export interface State {
   [fromRoutes.routesFeatureKey]: fromRoutes.State
@@ -38,4 +38,4 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [logger] : [];
 
 export const getRoutesState = createFeatureSelector<State, fromRoutes.State>('routes');
-export const getRoutesRoutes = createSelector(getRoutesState, fromRoutes.getRoutesRoutes);
+export const getRoutes = createSelector(getRoutesState, fromRoutes.getRoutes);

@@ -1,4 +1,4 @@
-import { createReducer, on, createSelector } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { RoutesActions } from '../actions';
 import { Route } from '../models/route';
 
@@ -25,4 +25,5 @@ export const reducer = createReducer(
   on(RoutesActions.refreshFailure, (state, { error }) => ({ ...state, error: error, loading: false }))
 );
 
-export const getRoutesRoutes = (state: State) => state.routes;
+export const getRoutes = (state: State) => state.routes;
+export const getAgency = (state: State) => state.agency;

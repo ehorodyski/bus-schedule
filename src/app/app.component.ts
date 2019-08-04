@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   routes$: Observable<Array<Route>>;
 
   constructor(private store: Store<fromRoot.State>) {
-    this.routes$ = store.pipe(select(fromRoot.getRoutesRoutes));
+    this.routes$ = store.pipe(select(fromRoot.getRoutes));
   }
 
   ngOnInit() {
