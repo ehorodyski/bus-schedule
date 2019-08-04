@@ -1,24 +1,20 @@
 import { InjectionToken } from '@angular/core';
+import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer, Action } from '@ngrx/store';
 
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer,
-  Action
-} from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromRoutes from '../core/reducers/routes.reducer';
+import * as fromVehicleLocations from '../core/reducers/vehicle-locations.reducer';
 
 export interface State {
-  [fromRoutes.routesFeatureKey]: fromRoutes.State
+  [fromRoutes.routesFeatureKey]: fromRoutes.State;
+  [fromVehicleLocations.vehicleLocationsFeatureKey]: fromVehicleLocations.State;
 }
 
 export const reducers = new InjectionToken<ActionReducerMap<State, Action>>(
   'Root reducers token', {
     factory: () => ({
-      [fromRoutes.routesFeatureKey]: fromRoutes.reducer
+      [fromRoutes.routesFeatureKey]: fromRoutes.reducer,
+      [fromVehicleLocations.vehicleLocationsFeatureKey]: fromVehicleLocations.reducer
     })
   }
 );

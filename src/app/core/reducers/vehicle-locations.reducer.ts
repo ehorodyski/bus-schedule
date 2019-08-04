@@ -9,7 +9,7 @@ export interface State {
   error: any;
   lastTime: number;
   loading: boolean;
-  locations: Array<VehicleLocation>
+  locations: Array<VehicleLocation>;
 }
 
 const initialState: State = {
