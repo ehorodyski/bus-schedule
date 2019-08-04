@@ -36,3 +36,6 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 }
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [logger] : [];
+
+export const getRoutesState = createFeatureSelector<State, fromRoutes.State>('routes');
+export const getRoutesRoutes = createSelector(getRoutesState, fromRoutes.getRoutesRoutes);
