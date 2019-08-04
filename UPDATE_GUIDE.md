@@ -32,7 +32,8 @@ Angular does not advise using their online updater across multiple major version
 8. ng add @ngrx/store
 9. Document @ngrx folder structure best practices
 10. Mention barrels
-
+11. Refactor App Component to remove references to services
+12. Service tests are now pure, no service-level variables are used as dependencies.
 
 TODO:
 1. Update tests

@@ -17,7 +17,7 @@ export class RoutesEffects {
     this.actions$.pipe(
       ofType(RoutesActions.refresh),
       exhaustMap(action =>
-        this.routesService.refresh2(action.agency).pipe(
+        this.routesService.refresh(action.agency).pipe(
           map(routes => RoutesActions.refreshSuccess({ routes })),
           catchError(error => of(RoutesActions.refreshFailure({ error })))
         )
