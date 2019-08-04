@@ -28,10 +28,17 @@ export class RoutesService {
 
   private unpackXML(xml: string) {
     parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
-      this.data.next(
-        !result.body.route ? [] :
-          Array.isArray(result.body.route) ? result.body.route : [result.body.route]
-      );
+      const routes = !result.body.route ? [] :
+        Array.isArray(result.body.route) ? result.body.route : [result.body.route];
+      this.data.next(this.sortRoutes(routes));
+    });
+  }
+
+  private sortRoutes(routes: Route[]): Route[] {
+    return routes.sort((a: Route, b: Route) => {
+      if (a.title < b.title) { return -1; }
+      if (a.title > b.title) { return 1; }
+      return 0;
     });
   }
 
