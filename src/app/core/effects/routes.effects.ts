@@ -13,7 +13,7 @@ export class RoutesEffects {
     private routesService: RoutesService
   ) { }
 
-  refreshRoutes$ = createEffect(() =>
+  refresh$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RoutesActions.refresh),
       exhaustMap(action =>

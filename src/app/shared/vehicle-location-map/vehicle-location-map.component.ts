@@ -4,6 +4,10 @@ import { Subscription } from 'rxjs';
 import { MarkerCollection } from './marker-collection';
 import { RouteOptionsService } from '../../core/services/route-options.service';
 import { VehicleLocationsService } from '../../core/services/vehicle-locations.service';
+import * as fromRoot from '../../../app/reducers';
+import { Store } from '@ngrx/store';
+import { VehicleLocationsActions } from 'app/core/actions';
+
 
 declare var google: any;
 
@@ -19,12 +23,19 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   private vehicleSubscription: Subscription;
   private routeOptionsSubscription: Subscription;
 
-  constructor(private routeOptions: RouteOptionsService, private vehicleLocations: VehicleLocationsService) { }
+  constructor(
+    private routeOptions: RouteOptionsService,
+    private store: Store<fromRoot.State>,
+    private vehicleLocations: VehicleLocationsService
+  ) { }
 
   ngOnInit() {
     this.createMap();
     this.subscribeToVehicleData();
     this.subscribeToRouteOptionsChanges();
+
+    this.store.dispatch(VehicleLocationsActions.refresh());
+
   }
 
   ngOnDestroy() {

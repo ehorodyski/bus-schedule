@@ -34,4 +34,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [logger] : [];
 
 export const getRoutesState = createFeatureSelector<State, fromRoutes.State>('routes');
+export const getVehicleLocationState = createFeatureSelector<State, fromVehicleLocations.State>('vehicleLocations');
+
 export const getRoutes = createSelector(getRoutesState, fromRoutes.getRoutes);
+export const getAgency = createSelector(getRoutesState, fromRoutes.getAgency);
+export const getLastUpdateTime = createSelector(getVehicleLocationState, fromVehicleLocations.getLastUpdateTime);
