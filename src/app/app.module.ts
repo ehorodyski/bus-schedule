@@ -9,6 +9,8 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { RoutesEffects } from './core/effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { reducers, metaReducers } from './reducers';
         strictStateImmutability: true,
         strictActionImmutability: true
       }
-    })
+    }),
+    EffectsModule.forRoot([RoutesEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]
