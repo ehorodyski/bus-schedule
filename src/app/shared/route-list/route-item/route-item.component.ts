@@ -27,11 +27,9 @@ export class RouteItemComponent implements OnInit {
   }
 
   onRouteChecked(checked: boolean) {
-    if (checked) {
-      this.store.dispatch(RouteOptionsActions.showRoute({ agency: 'sf-muni', route: this.route.tag }));
-    } else {
-      this.store.dispatch(RouteOptionsActions.hideRoute({ agency: 'sf-muni', route: this.route.tag }));
-    }
+    checked
+      ? this.store.dispatch(RouteOptionsActions.showRoute({ agency: 'sf-muni', route: this.route.tag }))
+      : this.store.dispatch(RouteOptionsActions.hideRoute({ agency: 'sf-muni', route: this.route.tag }));
   }
 
 }
