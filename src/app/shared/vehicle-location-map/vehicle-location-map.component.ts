@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { MarkerCollection } from './marker-collection';
 import { RouteOptionsService } from '../../core/services/route-options.service';
 import * as fromRoot from '../../../app/reducers';
-import { VehicleLocationsActions } from '../..//core/actions';
-import { VehicleLocation } from '../..//core/models/vehicle-location';
+import { VehicleLocationsActions } from '../../core/actions';
+import { VehicleLocation } from '../../core/models/vehicle-location';
 
 
 declare var google: any;
@@ -27,7 +27,6 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
     private routeOptions: RouteOptionsService,
     private store: Store<fromRoot.State>,
   ) {
-    // LOAD ROUTES
   }
 
   ngOnInit() {
@@ -58,11 +57,12 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   }
 
   private subscribeToRouteOptionsChanges() {
-    this.routeOptionsSubscription = this.routeOptions.changedOptions.subscribe(changes =>
-      changes.forEach(change =>
+    this.routeOptionsSubscription = this.routeOptions.changedOptions.subscribe(changes => {
+      return changes.forEach(change =>
         this.routeOptions.shouldDisplayRoute(change.agency, change.route) ?
           this.markers.show(change.route) :
-          this.markers.hide(change.route)));
+          this.markers.hide(change.route))
+    });
   }
 
   private subscribeToVehicleData() {

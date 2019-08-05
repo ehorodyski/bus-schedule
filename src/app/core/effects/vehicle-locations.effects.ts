@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -10,12 +10,6 @@ import { VehicleLocationsService } from '../services/vehicle-locations.service';
 
 @Injectable()
 export class VehicleLocationsEffects {
-
-  constructor(
-    private actions$: Actions,
-    private store: Store<fromRoot.State>,
-    private vehicleLocationsService: VehicleLocationsService
-  ) { }
 
   refresh$ = createEffect(() =>
     this.actions$.pipe(
@@ -34,5 +28,11 @@ export class VehicleLocationsEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store<fromRoot.State>,
+    private vehicleLocationsService: VehicleLocationsService
+  ) { }
 
 }

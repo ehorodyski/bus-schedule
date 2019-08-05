@@ -2,6 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { RouteOptionsService } from '../../../core/services/route-options.service';
 import { Route } from '../../../core/models/route';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../reducers';
+import { RouteOptionsActions } from 'app/core/actions';
+
 
 @Component({
   selector: 'bus-route-item',
@@ -13,14 +17,21 @@ export class RouteItemComponent implements OnInit {
 
   @Input() route: Route;
 
-  constructor(private options: RouteOptionsService) { }
+  constructor(
+    private options: RouteOptionsService,
+    private store: Store<fromRoot.State>,
+  ) { }
 
   ngOnInit() {
     this.checked = this.options.shouldDisplayRoute('sf-muni', this.route.tag);
   }
 
-  onRouteChecked(checked) {
-    checked ? this.options.showRoute('sf-muni', this.route.tag) : this.options.hideRoute('sf-muni', this.route.tag);
+  onRouteChecked(checked: boolean) {
+    if (checked) {
+      this.store.dispatch(RouteOptionsActions.showRoute({ agency: 'sf-muni', route: this.route.tag }));
+    } else {
+      this.store.dispatch(RouteOptionsActions.hideRoute({ agency: 'sf-muni', route: this.route.tag }));
+    }
   }
 
 }

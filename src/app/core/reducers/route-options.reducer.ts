@@ -1,17 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
+import { RouteOptionsActions } from 'app/core/actions';
 
 export const routesFeatureKey = 'routeOptions';
 
 export interface State {
-  options: Array<{ agency: string, route: string }>;
+  change: Array<{ agency: string, route: string }>;
 }
 
 const initialState: State = {
-  options: []
+  change: []
 }
 
 export const reducer = createReducer(
   initialState
 );
 
-export const getOptions = (state: State) => state.options;
+export const getVisibleRoutes = (state: State) => state.change;

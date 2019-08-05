@@ -10,9 +10,10 @@ export class RouteOptionsService {
   changedOptions: Subject<Array<{ agency: string, route: string }>>
 
   constructor(private localStorage: LocalStorageService) {
-    this.options = this.localStorage.get('routeOptions') || {};
+    this.options = this.localStorage.get('routeOptions') || [];
     this.changedOptions = new Subject();
   }
+
 
   hideRoute(agency: string, route: string | Array<string>): void {
     const routes = Array.isArray(route) ? route : [route];

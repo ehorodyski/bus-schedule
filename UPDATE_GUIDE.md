@@ -36,6 +36,7 @@ Angular does not advise using their online updater across multiple major version
 11. Refactor App Component to remove references to services
 12. Service tests are now pure, no service-level variables are used as dependencies.
 13. Use folder structuring based off NgRX best practice (to make it my own).
+14. Reduce services out of most components to replace with actions.
 
 
 TODO:

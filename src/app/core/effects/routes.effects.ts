@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, exhaustMap } from 'rxjs/operators';
@@ -7,11 +7,6 @@ import * as RoutesActions from '../actions/routes.actions';
 
 @Injectable()
 export class RoutesEffects {
-
-  constructor(
-    private actions$: Actions,
-    private routesService: RoutesService
-  ) { }
 
   refresh$ = createEffect(() =>
     this.actions$.pipe(
@@ -24,5 +19,10 @@ export class RoutesEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private routesService: RoutesService
+  ) { }
 
 }
