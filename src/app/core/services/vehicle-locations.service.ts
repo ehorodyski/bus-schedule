@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { parseString } from 'xml2js';
 
