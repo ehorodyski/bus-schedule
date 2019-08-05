@@ -29,6 +29,7 @@ export class RouteOptionsService {
   }
 
   private setRouteVisibility(agency: string, routes: Array<string>, visible: boolean): Array<{ agency: string; route: string; }> {
+    console.log('setRouteVisibility');
     this.options[agency] = this.options[agency] || {};
     routes.forEach(route => this.options[agency][route] = visible);
     this.localStorage.set('routeOptions', this.options);

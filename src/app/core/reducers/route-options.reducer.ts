@@ -12,7 +12,7 @@ const initialState: State = {
 }
 
 export const reducer = createReducer(
-  initialState
+  initialState,
 );
 
-export const getVisibleRoutes = (state: State) => state.change;
+export const getChangedOptions = (state: State) => state.change;

@@ -15,7 +15,6 @@ export class RouteOptionsEffects {
 
   showRoute$ = createEffect(() => this.actions$.pipe(
     ofType(RouteOptionsActions.showRoute),
-    tap(action => this.routeOptionsService.showRoute(action.agency, action.route))
   ), { dispatch: false });
 
   constructor(

@@ -44,4 +44,4 @@ export const getRoutes = createSelector(getRoutesState, fromRoutes.getRoutes);
 export const getAgency = createSelector(getRoutesState, fromRoutes.getAgency);
 export const getVehicleLocations = createSelector(getVehicleLocationState, fromVehicleLocations.getVehicleLocations);
 export const getLastUpdateTime = createSelector(getVehicleLocationState, fromVehicleLocations.getLastUpdateTime);
-export const getVisibleRoutes = createSelector(getOptionsState, fromRouteOptions.getVisibleRoutes);
+export const getChangedOptions = createSelector(getOptionsState, fromRouteOptions.getChangedOptions);

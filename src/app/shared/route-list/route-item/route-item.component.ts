@@ -15,6 +15,7 @@ import { RouteOptionsActions } from 'app/core/actions';
 export class RouteItemComponent implements OnInit {
   checked: boolean;
 
+  /// TODO
   @Input() route: Route;
 
   constructor(
