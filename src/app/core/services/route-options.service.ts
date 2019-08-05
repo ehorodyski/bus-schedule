@@ -6,7 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class RouteOptionsService {
   private options;
 
-  //TODO: Put in NGRX
+  // TODO: Put in NGRX
   changedOptions: Subject<Array<{ agency: string, route: string }>>
 
   constructor(private localStorage: LocalStorageService) {

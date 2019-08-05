@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { MarkerCollection } from './marker-collection';
 import { RouteOptionsService } from '../../core/services/route-options.service';
-import { VehicleLocationsService } from '../../core/services/vehicle-locations.service';
 import * as fromRoot from '../../../app/reducers';
-import { Store } from '@ngrx/store';
-import { VehicleLocationsActions } from 'app/core/actions';
+import { VehicleLocationsActions } from '../..//core/actions';
+import { VehicleLocation } from '../..//core/models/vehicle-location';
 
 
 declare var google: any;
@@ -26,7 +26,9 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   constructor(
     private routeOptions: RouteOptionsService,
     private store: Store<fromRoot.State>,
-  ) { }
+  ) {
+    // LOAD ROUTES
+  }
 
   ngOnInit() {
     this.createMap();
@@ -40,8 +42,8 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
     this.routeOptionsSubscription.unsubscribe();
   }
 
-  private buildMarkers(locs: any) {
-    locs.forEach(loc => {
+  private buildMarkers(locations: any) {
+    locations.forEach((loc: VehicleLocation) => {
       this.markers.merge(loc, this.routeOptions.shouldDisplayRoute('sf-muni', loc.routeTag));
     });
   }

@@ -4,17 +4,20 @@ import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector,
 import { environment } from '../../environments/environment';
 import * as fromRoutes from '../core/reducers/routes.reducer';
 import * as fromVehicleLocations from '../core/reducers/vehicle-locations.reducer';
+import * as fromRouteOptions from '../core/reducers/route-options.reducer';
 
 export interface State {
   [fromRoutes.routesFeatureKey]: fromRoutes.State;
   [fromVehicleLocations.vehicleLocationsFeatureKey]: fromVehicleLocations.State;
+  [fromRouteOptions.routesFeatureKey]: fromRouteOptions.State;
 }
 
 export const reducers = new InjectionToken<ActionReducerMap<State, Action>>(
   'Root reducers token', {
     factory: () => ({
       [fromRoutes.routesFeatureKey]: fromRoutes.reducer,
-      [fromVehicleLocations.vehicleLocationsFeatureKey]: fromVehicleLocations.reducer
+      [fromVehicleLocations.vehicleLocationsFeatureKey]: fromVehicleLocations.reducer,
+      [fromRouteOptions.routesFeatureKey]: fromRouteOptions.reducer
     })
   }
 );
@@ -35,8 +38,10 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [log
 
 export const getRoutesState = createFeatureSelector<State, fromRoutes.State>('routes');
 export const getVehicleLocationState = createFeatureSelector<State, fromVehicleLocations.State>('vehicleLocations');
+export const getOptionsState = createFeatureSelector<State, fromRouteOptions.State>('routeOptions');
 
 export const getRoutes = createSelector(getRoutesState, fromRoutes.getRoutes);
 export const getAgency = createSelector(getRoutesState, fromRoutes.getAgency);
 export const getVehicleLocations = createSelector(getVehicleLocationState, fromVehicleLocations.getVehicleLocations);
 export const getLastUpdateTime = createSelector(getVehicleLocationState, fromVehicleLocations.getLastUpdateTime);
+export const getOptions = createSelector(getOptionsState, fromRouteOptions.getOptions);
