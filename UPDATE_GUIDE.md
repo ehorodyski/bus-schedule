@@ -1,6 +1,39 @@
-#  Guide
+#  Update Guide
 
-This guide will walk through the process of how the [BusSchdeule](README.md) web application has been Updated from Angular 4 to Angular 8. Additionally, as part of the update process, [NgRx](https://ngrx.io/) has been added and introduced into the application in order to better maintain application state, providing a better end-user experience.
+This guide walks-through the process of updating the [BusSchedule](README.md) web application from Angular 4 to Angular 8. As part of the update process, [NgRx](https://ngrx.io/) has been introduced and integrated in order to better maintain application state.
+
+## Updating Angular Versions
+
+Angular provides an online updating guide that provides a list of steps needed to take in order to update [from Angular 4 to Angular 8](https://update.angular.io/#4.0:8.0).
+
+While the guide _does not_ recommend updating across multiple major versions, the steps generated from Angular's update guide were followed during the update in addition to the following steps:
+
+1. Using a new sample Angular 8 project to re-align existing npm package dependency versions for dependencies present across both projects.
+2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` were added that facilitate Angular 8 but were not present in the existing project.
+3. Terminal command `ng update` was run to re-scaffold the existing project to match Angular 8's specifications.
+4. Update `angular-2-local-storage` from `1.0.1` to `3.0.1` in order to compile alongside the rest of the updated dependencies.
+5. Refactor services using `Http` to align with the updated `HttpClient` (from `@angular/common/http`).
+6. Refactor `rxjs` imports to align with the updated version.
+
+### Angular Material
+The existing version of [Angular Material](https://material.angular.io/)  (`2.0.0-beta.6`) was drastically changed as Angular Material updated. Several steps were taken to align Angular Material with the updated version (`8.1.2`).
+
+1. `AngularMaterialModule` created in the root app folder (`/src/app/material.module.ts`). This module `imports` and `exports` individual Angular Material components used within BusSchedule.
+2. Modules requiring components from Angular Material updated to include `AngularMaterialModule` import dependency.
+3. HTML elements starting with `md` changed to start with `mat` to align with updated Angular Material specifications.
+4. Material menu icon residing in `<bus-root>` updated to address styling issues.
+
+
+## Integrating NgRx
+
+[NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. Reactive programming is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
+
+
+
+---
+
+
+
 
 ### Why Update?
 
@@ -8,7 +41,7 @@ Since Angular 4 a lot of improvements have been made to the Angular compiler to 
 
 ### Why NgRx?
 
-[NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. _Reactive programming_ is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
+
 
 ## Upgrading to Angular 8
 
