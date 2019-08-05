@@ -28,7 +28,31 @@ The existing version of [Angular Material](https://material.angular.io/)  (`2.0.
 
 [NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. Reactive programming is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
 
+NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
 
+Actions are commands that are _dispatched_ by components (or services). Dispatched Actions pass information to _Reducers_ which update application state. Should any side-effect logic need to be run in conjunction with the completion of an Action, _Effects_ are defined.
+
+The combination of Actions, Reducers, Effects, and (application_ State colloquially refered to as a _store_. Frequently, application state is split into _slices_, each slice representing a logical portion of a whole application state.
+
+### Integration Steps
+
+NgRx was integrated post-Angular update by running the Angular CLI command `ng add @ngrx/store`. This command scaffolds an empty app store.
+
+In order to add side-effects to the store's Actions, the package `@ngrx/effects` was added to BusSchedule.
+
+### Defining Application State
+
+BusSchedule has three logical areas that can be identified as slices of the total application state:
+
+1. Route Information
+2. Vehicle Location Information
+3. Route Options*
+
+Post-NgRx implementation, the application state is defined of `RouteState` and `VehicleLocationsState`.
+
+*The decision to forgo adding route options to the application state is addressed below.
+
+### NgRx Benefits
 
 ---
 
