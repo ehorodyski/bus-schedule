@@ -26,16 +26,12 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   constructor(
     private routeOptions: RouteOptionsService,
     private store: Store<fromRoot.State>,
-    private vehicleLocations: VehicleLocationsService
   ) { }
 
   ngOnInit() {
     this.createMap();
     this.subscribeToVehicleData();
     this.subscribeToRouteOptionsChanges();
-
-    this.store.dispatch(VehicleLocationsActions.refresh());
-
   }
 
   ngOnDestroy() {
@@ -45,7 +41,7 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   }
 
   private buildMarkers(locs: any) {
-    locs.locations.forEach(loc => {
+    locs.forEach(loc => {
       this.markers.merge(loc, this.routeOptions.shouldDisplayRoute('sf-muni', loc.routeTag));
     });
   }
@@ -67,11 +63,11 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
           this.markers.hide(change.route)));
   }
 
-  //TODO: NGRX Action
   private subscribeToVehicleData() {
-    this.vehicleSubscription = this.vehicleLocations.data.subscribe(locs => this.buildMarkers(locs));
-    this.vehicleLocations.refreshOld('sf-muni');
-    this.interval = setInterval(() => this.vehicleLocations.refreshOld('sf-muni'), 15000);
+    this.vehicleSubscription = this.store.select(fromRoot.getVehicleLocations)
+      .subscribe(locs => this.buildMarkers(locs));
+    this.store.dispatch(VehicleLocationsActions.refresh());
+    this.interval = setInterval(() => this.store.dispatch(VehicleLocationsActions.refresh()), 15000);
   }
 
 }

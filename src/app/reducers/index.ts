@@ -38,4 +38,5 @@ export const getVehicleLocationState = createFeatureSelector<State, fromVehicleL
 
 export const getRoutes = createSelector(getRoutesState, fromRoutes.getRoutes);
 export const getAgency = createSelector(getRoutesState, fromRoutes.getAgency);
+export const getVehicleLocations = createSelector(getVehicleLocationState, fromVehicleLocations.getVehicleLocations);
 export const getLastUpdateTime = createSelector(getVehicleLocationState, fromVehicleLocations.getLastUpdateTime);

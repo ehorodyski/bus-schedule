@@ -10,12 +10,7 @@ import { VehicleLoctationsResponse } from '../models/vehicle-locations-response'
 @Injectable()
 export class VehicleLocationsService {
 
-  ///TODO: MOVE THIS TO NGRX
-  data: Subject<VehicleLoctationsResponse>;
-
-  constructor(private http: HttpClient) {
-    this.data = new Subject();
-  }
+  constructor(private http: HttpClient) { }
 
   refresh(agency: string, since: number = 0): Observable<VehicleLoctationsResponse> {
     return this.http.get(environment.dataServiceUrl, {
@@ -36,28 +31,6 @@ export class VehicleLocationsService {
         const lastTime = parseInt(result.body.lastTime.time, 10);
         obs.next({ lastTime: lastTime, locations: locations });
         obs.complete();
-      });
-    });
-  }
-
-  /// KILL
-  refreshOld(agency: string, since: number = 0): void {
-    this.http.get(environment.dataServiceUrl, {
-      responseType: 'text',
-      params: {
-        command: 'vehicleLocations',
-        a: agency,
-        t: since.toString()
-      }
-    }).subscribe(xml => this.unpackXMLOld(xml));
-  }
-
-  private unpackXMLOld(xml: string) {
-    parseString(xml, { explicitArray: false, mergeAttrs: true }, (err, result) => {
-      this.data.next({
-        lastTime: parseInt(result.body.lastTime.time, 10),
-        locations: !result.body.vehicle ? [] :
-          Array.isArray(result.body.vehicle) ? result.body.vehicle : [result.body.vehicle]
       });
     });
   }
