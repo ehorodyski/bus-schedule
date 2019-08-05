@@ -4,7 +4,6 @@ import { RouteOptionsService } from '../../../core/services/route-options.servic
 import { Route } from '../../../core/models/route';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
-import { RouteOptionsActions } from 'app/core/actions';
 
 
 @Component({
@@ -15,22 +14,17 @@ import { RouteOptionsActions } from 'app/core/actions';
 export class RouteItemComponent implements OnInit {
   checked: boolean;
 
-  /// TODO
   @Input() route: Route;
 
-  constructor(
-    private options: RouteOptionsService,
-    private store: Store<fromRoot.State>,
-  ) { }
+  constructor(private options: RouteOptionsService) { }
 
   ngOnInit() {
     this.checked = this.options.shouldDisplayRoute('sf-muni', this.route.tag);
   }
 
   onRouteChecked(checked: boolean) {
-    checked
-      ? this.store.dispatch(RouteOptionsActions.showRoute({ agency: 'sf-muni', route: this.route.tag }))
-      : this.store.dispatch(RouteOptionsActions.hideRoute({ agency: 'sf-muni', route: this.route.tag }));
+    checked ? this.options.showRoute('sf-muni', this.route.tag) : this.options.hideRoute('sf-muni', this.route.tag);
+
   }
 
 }

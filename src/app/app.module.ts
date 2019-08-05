@@ -10,7 +10,7 @@ import { AngularMaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { reducers, metaReducers } from './reducers';
-import { RoutesEffects, VehicleLocationsEffects, RouteOptionsEffects } from './core/effects';
+import { RoutesEffects, VehicleLocationsEffects } from './core/effects';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,7 @@ import { RoutesEffects, VehicleLocationsEffects, RouteOptionsEffects } from './c
     }),
     EffectsModule.forRoot([
       RoutesEffects,
-      VehicleLocationsEffects,
-      RouteOptionsEffects
+      VehicleLocationsEffects
     ])
   ],
   providers: [],

@@ -6,7 +6,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class RouteOptionsService {
   private options;
 
-  // TODO: Put in NGRX
   changedOptions: Subject<Array<{ agency: string, route: string }>>
 
   constructor(private localStorage: LocalStorageService) {
@@ -28,13 +27,10 @@ export class RouteOptionsService {
     return this.options[agency] && this.options[agency][route];
   }
 
-  private setRouteVisibility(agency: string, routes: Array<string>, visible: boolean): Array<{ agency: string; route: string; }> {
-    console.log('setRouteVisibility');
+  private setRouteVisibility(agency: string, routes: Array<string>, visible: boolean): void {
     this.options[agency] = this.options[agency] || {};
     routes.forEach(route => this.options[agency][route] = visible);
-    this.localStorage.set('routeOptions', this.options);
-    // RETURN THIS
     this.changedOptions.next(routes.map<{ agency: string, route: string }>(r => ({ agency: agency, route: r })));
-    return routes.map<{ agency: string, route: string }>(r => ({ agency: agency, route: r }));
+    this.localStorage.set('routeOptions', this.options);
   }
 }
