@@ -1,5 +1,12 @@
 import { InjectionToken } from '@angular/core';
-import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer, Action } from '@ngrx/store';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer,
+  Action
+} from '@ngrx/store';
 
 import { environment } from '../../environments/environment';
 import * as fromRoutes from '../core/reducers/routes.reducer';

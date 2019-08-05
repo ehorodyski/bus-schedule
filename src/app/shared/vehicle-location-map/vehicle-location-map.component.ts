@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { MarkerCollection } from './marker-collection';
-import { RouteOptionsService } from '../../core/services/route-options.service';
 import * as fromRoot from '../../../app/reducers';
+import { MarkerCollection } from './marker-collection';
 import { VehicleLocationsActions } from '../../core/actions';
 import { VehicleLocation } from '../../core/models/vehicle-location';
-
+import { RouteOptionsService } from '../../core/services/route-options.service';
 
 declare var google: any;
 
@@ -26,8 +25,7 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   constructor(
     private routeOptions: RouteOptionsService,
     private store: Store<fromRoot.State>,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.createMap();

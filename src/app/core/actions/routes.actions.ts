@@ -1,4 +1,5 @@
 import { props, createAction } from '@ngrx/store';
+
 import { Route } from '../models/route';
 
 export const refresh = createAction('[Routes] Refresh', props<{ agency: string }>());

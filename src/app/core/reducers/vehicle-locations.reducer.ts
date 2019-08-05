@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { VehicleLocationsActions } from '../actions';
 import { VehicleLocation } from '../models/vehicle-location';
 

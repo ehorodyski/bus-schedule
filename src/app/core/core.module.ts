@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
-
 import { RouteOptionsService } from './services/route-options.service';
 import { RoutesService } from './services/routes.service';
 import { VehicleLocationsService } from './services/vehicle-locations.service';

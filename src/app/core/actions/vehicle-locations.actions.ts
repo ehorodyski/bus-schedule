@@ -1,4 +1,5 @@
 import { props, createAction } from '@ngrx/store';
+
 import { VehicleLocation } from '../models/vehicle-location';
 
 export const refresh = createAction('[Vehicle Locations] Refresh');

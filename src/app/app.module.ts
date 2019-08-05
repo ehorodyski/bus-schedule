@@ -5,10 +5,10 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { AppComponent } from './app.component';
 import { AngularMaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { AppComponent } from './app.component';
 import { reducers, metaReducers } from './reducers';
 import { RoutesEffects, VehicleLocationsEffects } from './core/effects';
 
