@@ -37,6 +37,8 @@ The main purpose to using NgRx is to provide a predictable state container, base
 
 ### Terminology and Concepts
 
+
+
 ### Integration
 
 
