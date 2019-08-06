@@ -4,11 +4,11 @@ This guide walks-through the process of updating the [BusSchedule](README.md) we
 
 ## Updating Angular Versions
 
-Angular provides an online updating guide that provides a list of steps needed to take in order to update [from Angular 4 to Angular 8](https://update.angular.io/#4.0:8.0).
+While Angular's official update guide **does not** recommend updating across multiple major versions, BusSchedule has been updated from Angular 4 to Angular 8. In order to successfully update Angular versions, a combination of a sample Angular 8 project was used in conjunction with the update steps provided by the [Angular Update Guide](https://update.angular.io/#4.0:8.0).
 
-While the guide _does not_ recommend updating across multiple major versions, the steps generated from Angular's update guide were followed during the update in addition to the following steps:
+Specific steps taken on BusSchedule are as follows:
 
-1. Using a new sample Angular 8 project to re-align existing npm package dependency versions for dependencies present across both projects.
+1. Using a new sample Angular 8 project, re-align existing npm package dependency versions for dependencies present across both projects.
 2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` were added that facilitate Angular 8 but were not present in the existing project.
 3. Terminal command `ng update` was run to re-scaffold the existing project to match Angular 8's specifications.
 4. Update `angular-2-local-storage` from `1.0.1` to `3.0.1` in order to compile alongside the rest of the updated dependencies.
@@ -16,7 +16,8 @@ While the guide _does not_ recommend updating across multiple major versions, th
 6. Refactor `rxjs` imports to align with the updated version.
 
 ### Angular Material
-The existing version of [Angular Material](https://material.angular.io/)  (`2.0.0-beta.6`) was drastically changed as Angular Material updated. Several steps were taken to align Angular Material with the updated version (`8.1.2`).
+
+Re-aligning [Angular Material](https://material.angular.io/) with it's updated library required several steps:
 
 1. `AngularMaterialModule` created in the root app folder (`/src/app/material.module.ts`). This module `imports` and `exports` individual Angular Material components used within BusSchedule.
 2. Modules requiring components from Angular Material updated to include `AngularMaterialModule` import dependency.
@@ -24,7 +25,19 @@ The existing version of [Angular Material](https://material.angular.io/)  (`2.0.
 4. Material menu icon residing in `<bus-root>` updated to address styling issues.
 
 
-## Integrating NgRx
+## NgRx
+
+[NgRx](https://ngrx.io/) enables reactive extensions for Angular. NgRx implements the Redux pattern using RxJS observables. By implementing the Redux pattern, components and other pieces of software _react_ to changes in data instead of asking for changes.
+
+The main purpose to using NgRx is to provide a predictable state container, based on three main principles:
+
+1. **Single Source of Truth** - State is handled in one object and one place, making debugging or  making modifications easier.
+2. **Read-Only State** - State is never directly changed. Instead, actions are dispatched to a centralized location where changes are made.
+3. **State is Changed by Pure Functions** - State in NgRx is immutable. When these pure functions (reducers) changes something in the state, a new state object is returned.
+
+### Terminology and Concepts
+
+### Integration
 
 
 Sources to quote:
@@ -32,7 +45,7 @@ Sources to quote:
 1. https://medium.com/frontend-fun/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
 2. https://www.toptal.com/angular-js/ngrx-angular-reaction-application
 
-[NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. Reactive programming is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
+
 
 NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
 
