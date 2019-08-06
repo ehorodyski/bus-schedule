@@ -12,8 +12,9 @@ Specific steps taken on BusSchedule are as follows:
 2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` were added that facilitate Angular 8 but were not present in the existing project.
 3. Terminal command `ng update` was run to re-scaffold the existing project to match Angular 8's specifications.
 4. Update `angular-2-local-storage` from `1.0.1` to `3.0.1` in order to compile alongside the rest of the updated dependencies.
-5. Refactor services using `Http` to align with the updated `HttpClient` (from `@angular/common/http`).
-6. Refactor `rxjs` imports to align with the updated version.
+5. Packages `timers` and `stream` were added as they are required for `xml2js` and `sax` respectively.
+6. Refactor services using `Http` to align with the updated `HttpClient` (from `@angular/common/http`).
+7. Refactor `rxjs` imports to align with the updated version.
 
 ### Angular Material
 

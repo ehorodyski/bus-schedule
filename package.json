@@ -29,6 +29,8 @@
     "angular-2-local-storage": "^3.0.1",
     "core-js": "^2.4.1",
     "rxjs": "~6.5.2",
+    "streams": "^0.1.0",
+    "timers": "^0.1.1",
     "tslib": "^1.9.0",
     "xml2js": "^0.4.17",
     "zone.js": "~0.9.1"
