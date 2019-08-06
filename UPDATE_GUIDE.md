@@ -85,7 +85,7 @@ By utilizing NgRx we are afforded the following benefits:
 12. Service tests are now pure, no service-level variables are used as dependencies.
 13. Use folder structuring based off NgRX best practice (to make it my own).
 14. Reduce services out of most components to replace with actions.
-15
+15. We would still be reliant on using RouteOptions service calls, unless we stored all selected routes in store -- which we might want to do...
 
 TODO:
 1. Update tests

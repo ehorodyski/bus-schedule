@@ -19,6 +19,7 @@ export class RouteItemComponent implements OnInit {
   constructor(private options: RouteOptionsService) { }
 
   ngOnInit() {
+    //// TODO: This is a place where we would NOT want to run an action, since they do not return anything.
     this.checked = this.options.shouldDisplayRoute('sf-muni', this.route.tag);
   }
 
