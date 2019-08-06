@@ -1,7 +1,7 @@
-// /// TODO
-
+/// TODO
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { Subject } from 'rxjs';
+// import { provideMockStore } from '@ngrx/store/testing';
 // import { LocalStorageService } from 'angular-2-local-storage';
 
 // import { RouteOptionsService } from '../../core/services/route-options.service';
@@ -53,7 +53,8 @@
 //       providers: [
 //         { provide: LocalStorageService, useClass: LocalStorageServiceMock },
 //         RouteOptionsService,
-//         { provide: VehicleLocationsService, useClass: VehicleLocationServiceMock }
+//         { provide: VehicleLocationsService, useClass: VehicleLocationServiceMock },
+//         provideMockStore()
 //       ]
 //     }).compileComponents();
 //   }));
