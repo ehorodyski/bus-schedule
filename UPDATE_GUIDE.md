@@ -54,42 +54,16 @@ Post-NgRx implementation, the application state is defined of `RouteState` and `
 
 ### NgRx Benefits
 
+By utilizing NgRx we are afforded the following benefits:
+
+1.
+
 ---
 
 
-
-
 ### Why Update?
-
-Since Angular 4 a lot of improvements have been made to the Angular compiler to make it faster, as well as general improvements to the Angular framework and it's core features: such as a better networking module, an improved build system, and richer command-line interface that allows for easier generation of components, modules, and additional development improvements.
-
-### Why NgRx?
-
-
-
-## Upgrading to Angular 8
-
-Angular does not advise using their online updater across multiple major versions. In order to update the app, we used a fresh angular project as a base.
-
-1. Update Package.json
-2. Run ng update
-3. Update addt. dependencies
-
-      Name                               Version                  Command to update
-     --------------------------------------------------------------------------------
-      @angular/cli                       8.0.6 -> 8.2.0           ng update @angular/cli
-      @angular/core                      8.0.3 -> 8.2.0           ng update @angular/core
-      rxjs                               6.4.0 -> 6.5.2           ng update rxjs
-
-4.Update angular-2-local-storage
-5.Go through each file and update
-6. Create Material Angular module
-7.  Refactor to get back working
-7. Mark NGRX spots
-8. ng add @ngrx/store
 9. Document @ngrx folder structure best practices
 10. Mention barrels
-11. Add @ngrx/effects
 11. Refactor App Component to remove references to services
 12. Service tests are now pure, no service-level variables are used as dependencies.
 13. Use folder structuring based off NgRX best practice (to make it my own).
