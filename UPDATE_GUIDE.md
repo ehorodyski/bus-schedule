@@ -101,12 +101,17 @@ Then if the need arises, we can always refactor part of the application into a s
 
 On the other hand if we have a concurrent data modification scenario in a part of our application, we might as well use a store from the beginning, because that is a great solution for that situation.
 
-
+vehicle-location-map
  // TODO: We do not want to turn this portion into store. Why?
     //       0. We are creating markers for all possible
     //       1. GoogleMaps is finicky
     //       2. shouldDisplayRoute is called hundreds of times
     //       3. Ultimately, creates unneeded overhead.
+
+route-item
+    //// TODO: This is a place where we would NOT want to run an action, since they do not return anything.
+
+
 
 Unidirectional Data Flow
 
