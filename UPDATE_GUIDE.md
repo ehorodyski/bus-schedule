@@ -26,6 +26,12 @@ The existing version of [Angular Material](https://material.angular.io/)  (`2.0.
 
 ## Integrating NgRx
 
+
+Sources to quote:
+
+1. https://medium.com/frontend-fun/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
+2. https://www.toptal.com/angular-js/ngrx-angular-reaction-application
+
 [NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. Reactive programming is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
 
 NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
@@ -52,11 +58,22 @@ Post-NgRx implementation, the application state is defined of `RouteState` and `
 
 *The decision to forgo adding route options to the application state is addressed below.
 
-### NgRx Benefits
+### Benefits of NgRx
 
 By utilizing NgRx we are afforded the following benefits:
 
-1.
+1. Remove service dependencies from components (as applicable).
+2. Remove state from services to let service calls be stateless.
+
+### Actions
+
+### Reducers
+
+### Effects
+
+### NgRx Benefits
+
+
 
 ---
 
@@ -68,16 +85,7 @@ By utilizing NgRx we are afforded the following benefits:
 12. Service tests are now pure, no service-level variables are used as dependencies.
 13. Use folder structuring based off NgRX best practice (to make it my own).
 14. Reduce services out of most components to replace with actions.
-
+15
 
 TODO:
 1. Update tests
-
-Angular provides an [update guide](https://update.angular.io/#4.0:8.0) that has been followed to update BusSchedule from Angular 4 to Angular 8. Below are a list of steps that were taken to update the application.
-
-**Development Note:** Please ensure to re-run the `npm install` the existing Angular 4 version of BusSchedule resides locally on your machine.
-
-
-### Steps Taken
-
-1. `HttpModule` and the `Http` service have been switched to `HttpClientModule` and the `HttpClient` service. `HttpClient` reduces boiler-plate code (no need to map to JSON anymore) and supports typed return values and interceptors. ([Additional information on `HttpClient`](https://angular.io/guide/http)) TODO!

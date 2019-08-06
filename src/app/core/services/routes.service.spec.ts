@@ -40,7 +40,7 @@ describe('RoutesService', () => {
       body += route('5R', '5R-Fulton Rapid');
       body += '</body>';
 
-      let expectedResult = [
+      const expectedResult = [
         { tag: '1', title: '1-California' },
         { tag: '1AX', title: '1AX-California A Express' },
         { tag: '1BX', title: '1BX-California B Express' },
@@ -51,6 +51,7 @@ describe('RoutesService', () => {
       ];
 
       const expectedUrl = 'http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=umn-twin';
+
       service.refresh('umn-twin').subscribe(
         (res) => expect(res).toEqual(expectedResult),
         fail
@@ -65,9 +66,10 @@ describe('RoutesService', () => {
       body += route('1BX', '1BX-California B Express');
       body += '</body>';
 
-      let expectedResult = [{ tag: '1BX', title: '1BX-California B Express' }];
+      const expectedResult = [{ tag: '1BX', title: '1BX-California B Express' }];
 
       const expectedUrl = 'http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=sf-muni';
+
       service.refresh('sf-muni').subscribe(
         (res) => expect(res).toEqual(expectedResult),
         fail
@@ -80,7 +82,9 @@ describe('RoutesService', () => {
     it('emits an empty array with no routes in the response', () => {
       let body = '<body><lastTime time="1499622357839" />';
       body += '</body>';
+
       const expectedUrl = 'http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=sf-muni';
+
       service.refresh('sf-muni').subscribe(
         (res) => expect(res).toEqual([]),
         fail
