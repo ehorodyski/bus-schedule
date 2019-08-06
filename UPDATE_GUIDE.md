@@ -38,7 +38,10 @@ The main purpose to using NgRx is to provide a predictable state container, base
 
 ### Terminology and Concepts
 
-
+* **Store** - The state of your application; the only thing modified by dispatching actions to it.
+* **Reducer** - The pure functions that take previous state from your store, run a pure function against it, and adds a new state to the store.
+* **Actions** - The action to be dispatched; essentially an action type and a payload of data to use in a reducer.
+* **Effects** - Middleware that performs side-effects once an action has been completed.
 
 ### Integration
 
@@ -73,27 +76,6 @@ BusSchedule has three logical areas that can be identified as slices of the tota
 Post-NgRx implementation, the application state is defined of `RouteState` and `VehicleLocationsState`.
 
 *The decision to forgo adding route options to the application state is addressed below.
-
-### Benefits of NgRx
-
-By utilizing NgRx we are afforded the following benefits:
-
-1. Remove service dependencies from components (as applicable).
-2. Remove state from services to let service calls be stateless.
-
-### Actions
-
-### Reducers
-
-### Effects
-
-### NgRx Benefits
-
-
-
----
-
-If we base ourselves only on the last part, only a small number of apps namely applications with server push requirements would benefit from Flux. Because that's usually when we have multiple actors updating the same data, and that is the case of the original Facebook counter issue that originated Flux.
 
 Not to create state for Route Options:
 1. Storage is a synchronous action, initialized during app startup. If we moved it into an action, we would, by Best Practice, want to initialize storage OUTSIDE of the Route Options constructor, which creates overhead.
