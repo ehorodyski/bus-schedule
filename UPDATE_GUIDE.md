@@ -4,11 +4,11 @@ This guide walks-through the process of updating the [BusSchedule](README.md) we
 
 ## Updating Angular Versions
 
-Angular provides an online updating guide that provides a list of steps needed to take in order to update [from Angular 4 to Angular 8](https://update.angular.io/#4.0:8.0).
+While Angular's official update guide **does not** recommend updating across multiple major versions, BusSchedule has been updated from Angular 4 to Angular 8. In order to successfully update Angular versions, a combination of a sample Angular 8 project was used in conjunction with the update steps provided by the [Angular Update Guide](https://update.angular.io/#4.0:8.0).
 
-While the guide _does not_ recommend updating across multiple major versions, the steps generated from Angular's update guide were followed during the update in addition to the following steps:
+Specific steps taken on BusSchedule are as follows:
 
-1. Using a new sample Angular 8 project to re-align existing npm package dependency versions for dependencies present across both projects.
+1. Using a new sample Angular 8 project, re-align existing npm package dependency versions for dependencies present across both projects.
 2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` were added that facilitate Angular 8 but were not present in the existing project.
 3. Terminal command `ng update` was run to re-scaffold the existing project to match Angular 8's specifications.
 4. Update `angular-2-local-storage` from `1.0.1` to `3.0.1` in order to compile alongside the rest of the updated dependencies.
@@ -16,7 +16,8 @@ While the guide _does not_ recommend updating across multiple major versions, th
 6. Refactor `rxjs` imports to align with the updated version.
 
 ### Angular Material
-The existing version of [Angular Material](https://material.angular.io/)  (`2.0.0-beta.6`) was drastically changed as Angular Material updated. Several steps were taken to align Angular Material with the updated version (`8.1.2`).
+
+Re-aligning [Angular Material](https://material.angular.io/) with it's updated library required several steps:
 
 1. `AngularMaterialModule` created in the root app folder (`/src/app/material.module.ts`). This module `imports` and `exports` individual Angular Material components used within BusSchedule.
 2. Modules requiring components from Angular Material updated to include `AngularMaterialModule` import dependency.
@@ -24,7 +25,21 @@ The existing version of [Angular Material](https://material.angular.io/)  (`2.0.
 4. Material menu icon residing in `<bus-root>` updated to address styling issues.
 
 
-## Integrating NgRx
+## NgRx
+
+[NgRx](https://ngrx.io/) enables reactive extensions for Angular. NgRx implements the Redux pattern using RxJS observables. By implementing the Redux pattern, components and other pieces of software _react_ to changes in data instead of asking for changes.
+
+The main purpose to using NgRx is to provide a predictable state container, based on three main principles:
+
+1. **Single Source of Truth** - State is handled in one object and one place, making debugging or  making modifications easier.
+2. **Read-Only State** - State is never directly changed. Instead, actions are dispatched to a centralized location where changes are made.
+3. **State is Changed by Pure Functions** - State in NgRx is immutable. When these pure functions (reducers) changes something in the state, a new state object is returned.
+
+### Terminology and Concepts
+
+
+
+### Integration
 
 
 Sources to quote:
@@ -32,7 +47,7 @@ Sources to quote:
 1. https://medium.com/frontend-fun/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
 2. https://www.toptal.com/angular-js/ngrx-angular-reaction-application
 
-[NgRx](https://ngrx.io/) introduces _reactive programming_ into an Angular application. Reactive programming is a way for applications to handle events and data flow in applications. With reactive programming, instead of pushing data directly to components or services that need it, the component or service reacts to when data changes.
+
 
 NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
 
@@ -76,6 +91,99 @@ By utilizing NgRx we are afforded the following benefits:
 
 
 ---
+
+If we base ourselves only on the last part, only a small number of apps namely applications with server push requirements would benefit from Flux. Because that's usually when we have multiple actors updating the same data, and that is the case of the original Facebook counter issue that originated Flux.
+
+Not to create state for Route Options:
+1. Storage is a synchronous action, initialized during app startup. If we moved it into an action, we would, by Best Practice, want to initialize storage OUTSIDE of the Route Options constructor, which creates overhead.
+2. Because storage is synchronous, there is no benefit to making it asyncronous. Hide/showing routes will not fail therefore there is no added benefit to adding it to the store state.
+2. The route-item component relies on determining if the current route should be shown by returning a boolean. By using store we would dispatch an action, or have to select the state of all stored locations and filter through the list ourselves.
+3. Actions like hide and show route would need effects to call `setRouteVisibility`, which is unneeded overhead.
+4. There are several calls to `shouldDisplayRoute` within components. If we moved this functionality to the store, we would lose the syncrhonous nature.
+
+
+https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/
+provide an Observable-like pattern for decoupled component interaction
+provide a client container for temporary UI state
+provide a cache for avoiding excessive HTTP requests
+provide a solution for concurrent data modification by multiple actors
+provide a hook for tooling
+
+
+Here is a suggestion: unless you have a concurrent data modification scenario, consider starting to build your application with some plain RxJs services, leveraging local services and the dependency injection system.
+
+Then if the need arises, we can always refactor part of the application into a store if a use case comes up.
+
+On the other hand if we have a concurrent data modification scenario in a part of our application, we might as well use a store from the beginning, because that is a great solution for that situation.
+
+vehicle-location-map
+ // TODO: We do not want to turn this portion into store. Why?
+    //       0. We are creating markers for all possible
+    //       1. GoogleMaps is finicky
+    //       2. shouldDisplayRoute is called hundreds of times
+    //       3. Ultimately, creates unneeded overhead.
+
+route-item
+    //// TODO: This is a place where we would NOT want to run an action, since they do not return anything.
+
+
+
+Unidirectional Data Flow
+
+```
+├── app
+ │ ├── app-routing.module.ts
+ │ ├── app.component.css
+ │ ├── app.component.html
+ │ ├── app.component.ts
+ │ ├── app.module.ts
+ │ ├── components
+ │ ├── containers
+ │ │    └── my-feature
+ │ │         ├── my-feature.component.css
+ │ │         ├── my-feature.component.html
+ │ │         └── my-feature.component.ts
+ │ ├── models
+ │ │    ├── index.ts
+ │ │    └── my-model.ts
+ │ │    └── user.ts
+ │ ├── root-store
+ │ │    ├── index.ts
+ │ │    ├── root-store.module.ts
+ │ │    ├── selectors.ts
+ │ │    ├── state.ts
+ │ │    └── my-feature-store
+ │ │    |    ├── actions.ts
+ │ │    |    ├── effects.ts
+ │ │    |    ├── index.ts
+ │ │    |    ├── reducer.ts
+ │ │    |    ├── selectors.ts
+ │ │    |    ├── state.ts
+ │ │    |    └── my-feature-store.module.ts
+ │ │    └── my-other-feature-store
+ │ │         ├── actions.ts
+ │ │         ├── effects.ts
+ │ │         ├── index.ts
+ │ │         ├── reducer.ts
+ │ │         ├── selectors.ts
+ │ │         ├── state.ts
+ │ │         └── my-other-feature-store.module.ts
+ │ └── services
+ │      └── data.service.ts
+ ├── assets
+ ├── browserslist
+ ├── environments
+ │ ├── environment.prod.ts
+ │ └── environment.ts
+ ├── index.html
+ ├── main.ts
+ ├── polyfills.ts
+ ├── styles.css
+ ├── test.ts
+ ├── tsconfig.app.json
+ ├── tsconfig.spec.json
+ └── tslint.json
+ ```
 
 
 ### Why Update?

@@ -19,8 +19,8 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   private interval;
   private map;
   private markers: MarkerCollection;
-  private vehicleSubscription: Subscription;
-  private routeOptionsSubscription: Subscription;
+  private vehicleSubscription: Subscription = new Subscription();
+  private routeOptionsSubscription: Subscription = new Subscription();
 
   constructor(
     private routeOptions: RouteOptionsService,
@@ -55,10 +55,6 @@ export class VehicleLocationMapComponent implements OnDestroy, OnInit {
   }
 
   private subscribeToRouteOptionsChanges() {
-    // TODO: We do not want to turn this portion into store. Why?
-    //       1. GoogleMaps is finicky
-    //       2. shouldDisplayRoute is called hundreds of times
-    //       3. Ultimately, creates unneeded overhead.
     this.routeOptionsSubscription = this.routeOptions.changedOptions.subscribe(changes => {
       return changes.forEach(change =>
         this.routeOptions.shouldDisplayRoute(change.agency, change.route) ?
