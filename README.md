@@ -39,7 +39,7 @@ Build, then deploy:
 
 For more information, see [angular-cli-ghpages](https://github.com/angular-buch/angular-cli-ghpages)
 
-I currently have it [deployed](https://kensodemann.github.io/bus-schedule). Note that you have to allow loading of unsafe scripts in order for it to actually work currently. This is due to how the data is served. It could be solved by the data being served via HTTPS instead of HTTP.
+I currently have it [deployed](http://ngrx-bus-schedule.s3-website-us-east-1.amazonaws.com/). Note that you have to allow loading of unsafe scripts in order for it to actually work currently. This is due to how the data is served. It could be solved by the data being served via HTTPS instead of HTTP.
 
 
 [travis-badge]: https://travis-ci.org/kensodemann/bus-schedule.svg?branch=master
