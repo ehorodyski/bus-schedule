@@ -26,7 +26,7 @@ Re-aligning [Angular Material](https://material.angular.io/) with it's updated l
 4. Material menu icon residing in `<bus-root>` updated to address styling issues.
 
 
-## NgRx
+## Migrating to NgRx
 
 [NgRx](https://ngrx.io/) enables reactive extensions for Angular. NgRx implements the Redux pattern using RxJS observables. By implementing the Redux pattern, components and other pieces of software _react_ to changes in data instead of asking for changes.
 
@@ -53,12 +53,11 @@ When utilizing NgRx as a store solution, the following benefits are provided:
 3. A cache provided for avoiding excessive HTTP requests.
 4. A solution for concurrent data modification by multiple actors
 
-### Integration Steps
+### Installation Steps
 
 NgRx was integrated post-Angular update by running the Angular CLI command `ng add @ngrx/store`. This command scaffolds an empty app store.
 
 In order to add side-effects to the store's Actions, the package `@ngrx/effects` was added to BusSchedule.
-
 
 ## BusSchedule Store
 
@@ -107,60 +106,33 @@ By combining the use of `VehicleLocationsActions` and `getVehicleLocations`, `Ve
 
 ### Route Options (not part of store)
 
----
+The portion of BusSchedule that handles Route Options is **not** a good candidate to consider moving to a Redux-based architecture (in this case, NgRx). When migrating an existing application to NgRx, it is important to note which portion(s) of functionality can benefit from this type of architecture.
 
+To quote [Angular University](https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/):
 
-NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
+> You’ll know when you need [NgRx]. If you aren’t sure if you need it, you don’t need it.
 
-Actions are commands that are _dispatched_ by components (or services). Dispatched Actions pass information to _Reducers_ which update application state. Should any side-effect logic need to be run in conjunction with the completion of an Action, _Effects_ are defined.
+Routes and Vehicle Locations are two obvious candidates to use NgRx. They perform asychronous operations that would benefit from being cached as part of an application state, and actions that would allow side-effects, such as presenting a user with a prompt to retry an action if it failed.
 
-The combination of Actions, Reducers, Effects, and (application_ State colloquially refered to as a _store_. Frequently, application state is split into _slices_, each slice representing a logical portion of a whole application state.
+Additionally, Route Options functionality is stricly synchronous and migrating that portion of functionality would create unneccesary overhead. Asynchronous data-sources make much more obvious use cases for NgRx.
 
+>Here is a suggestion: unless you have a concurrent data modification scenario, consider starting to build your application with some plain RxJs services, leveraging local services and the dependency injection system.
+>
+>Then if the need arises, we can always [migrate] part of the application into a store if a use case comes up.
 
+BusSchedule existed as a fully-functional, performant application before updating Angular 8. Therefore, portions of the app were [migrated] to NgRx, rather than the whole.
 
-### Defining Application State
+With respect to the existing codebase, the following reasons reflect the decision to forgo migrating Route Options to the application state:
 
-BusSchedule has three logical areas that can be identified as slices of the total application state:
+1. Loading local storage is a syncrhonous action initialized during app startup (when `RouteOptionsService` intializes). Using a Redux-based architecture, one would move this portion of functionality into an Action, which would rely on a component to dispatch it. Therefore losing the "automatic" loading of local storage and introducing a new dependency (being the "Load User Storage" action).
+2. Showing and Hiding routes appear to be obvious candidates for Actions the store can dispatch, however, each action updates local storage. To add Show/Hide Route Actions to the store would require creating an effect, which is additional an additional overhead.
+3. `RouteItem` and `VehicleLocationMap` utilize the simple method `RouteOptions.shouldDisplayRoute` to determine whether certain portions of the UI should show. To remove the dependency to `RouteOptionsService` from these components would require additionally complex logic by introducing Observables into the mix.
+4. There are _several_ calls to `shouldDisplayRoute` made during the lifecycle of BusSchedule. By removing the dependency to `RouteOptionsService`, we force the store to dispatch the same action several times concurrently -- with each dispatched action requiring an effect to run the additional logic required from `RouteOptionsService`.
 
-1. Route Information
-2. Vehicle Location Information
-3. Route Options*
+In short, if Route Options were added to the store with it's current implementation, it would introduce overhead without gaining any benefits.
 
-Post-NgRx implementation, the application state is defined of `RouteState` and `VehicleLocationsState`.
+## Best Practices
 
-*The decision to forgo adding route options to the application state is addressed below.
-
-Not to create state for Route Options:
-1. Storage is a synchronous action, initialized during app startup. If we moved it into an action, we would, by Best Practice, want to initialize storage OUTSIDE of the Route Options constructor, which creates overhead.
-2. Because storage is synchronous, there is no benefit to making it asyncronous. Hide/showing routes will not fail therefore there is no added benefit to adding it to the store state.
-2. The route-item component relies on determining if the current route should be shown by returning a boolean. By using store we would dispatch an action, or have to select the state of all stored locations and filter through the list ourselves.
-3. Actions like hide and show route would need effects to call `setRouteVisibility`, which is unneeded overhead.
-4. There are several calls to `shouldDisplayRoute` within components. If we moved this functionality to the store, we would lose the syncrhonous nature.
-
-
-https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/
-
-
-
-Here is a suggestion: unless you have a concurrent data modification scenario, consider starting to build your application with some plain RxJs services, leveraging local services and the dependency injection system.
-
-Then if the need arises, we can always refactor part of the application into a store if a use case comes up.
-
-On the other hand if we have a concurrent data modification scenario in a part of our application, we might as well use a store from the beginning, because that is a great solution for that situation.
-
-vehicle-location-map
- // TODO: We do not want to turn this portion into store. Why?
-    //       0. We are creating markers for all possible
-    //       1. GoogleMaps is finicky
-    //       2. shouldDisplayRoute is called hundreds of times
-    //       3. Ultimately, creates unneeded overhead.
-
-route-item
-    //// TODO: This is a place where we would NOT want to run an action, since they do not return anything.
-
-
-
-Unidirectional Data Flow
 
 ```
 ├── app
