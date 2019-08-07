@@ -42,15 +42,66 @@ The main purpose to using NgRx is to provide a predictable state container, base
 * **Reducer** - The pure functions that take previous state from your store, run a pure function against it, and adds a new state to the store.
 * **Actions** - The action to be dispatched; essentially an action type and a payload of data to use in a reducer.
 * **Effects** - Middleware that performs side-effects once an action has been completed.
+* **Selectors** - Pure functions that take slices of state as arguments and return some state data that can be accessed by components and other pieces of software.
 
-### Integration
+### Benefits
+
+When utilizing NgRx as a store solution, the following benefits are provided:
+
+1. An Observable-like pattern for decoupled component interaction.
+2. A client container for temporary UI state.
+3. A cache provided for avoiding excessive HTTP requests.
+4. A solution for concurrent data modification by multiple actors
+
+### Integration Steps
+
+NgRx was integrated post-Angular update by running the Angular CLI command `ng add @ngrx/store`. This command scaffolds an empty app store.
+
+In order to add side-effects to the store's Actions, the package `@ngrx/effects` was added to BusSchedule.
 
 
-Sources to quote:
+## BusSchedule Store
 
-1. https://medium.com/frontend-fun/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
-2. https://www.toptal.com/angular-js/ngrx-angular-reaction-application
+Two data "slices" constitute the total BusSchedule application state: `RoutesState` and `VehicleLocationState`. Notably missing from BusSchedule's store is any "Route Options" functionality. The rationale to exclude Route Options from the store can be found below after each slice's documented section.
 
+### RoutesState
+
+`RoutesState` consists of the following portion of application state:
+
+* `agency` - The current bus agency BusSchedule tracks.
+* `error` - A placeholder to store error messages should communication with the `routeList` data service fail.
+* `loading` - A boolean indication of whether or not the application is loading data from the `routeList` data service.
+* `routes` - A collection of routes cached from the result of the `routeList` data service.
+
+The primary action `RoutesActions.refresh()`:
+
+1. Sets the `loading` indicator to true.
+2. Runs the effect `RouteEffects.refresh$`.
+3. `RouteEffects.refresh$` calls `RoutesService.refresh()` to initiate a call to the `routeList` data service.
+4. Once the call is completed, `RouteEffects.refresh$` will dispatch `RoutesActions.refreshSuccess()` to update `RoutesState.routes` and `RouteStates.agency`, or will dispatch `RoutesAction.refreshFailure()` to populate `RoutesState.error` with the error returned from the service call. In either case, the `loading` indicator is turned to `false`.
+
+The selector `getRoutes` returns `Observable<Array<Route>>`.
+
+By combining the use of `RoutesActions` and `getRoutes`, `RoutesService` is no longer a dependency in `AppComponent` nor is there a need to subcribe, then unsubscribe, to any Observables.
+
+### VehicleLocationsState
+
+`VehicleLocationsState` consists of the following portion of application state:
+
+* `error` - A placeholder to store error messages should communication with the `vehicleLocations` data service fail.
+* `lastTime` - A numberic representation of the last time vehicle location information was updated.
+* `loading` - A boolean indication of whether or not the application is loading data from the `vehicleLocations` data service.
+* `locations` - A collection of vehicle locations cached from the result of the `vehicleLocations` data service.
+
+The primary action `VehicleLocations.refresh():
+
+1. Sets the `loading` indicator to true.
+2. Runs the effect `VehicleLocationsEffects.refresh$`.
+      1. This effect selects `agency` and `lastTime` from application state, using selectors `getAgency` and `getLastUpdateTime`. These values are used as parameters in the next step.
+3. `VehicleLocationsEffects.refresh$` calls `VehicleLocationsService.refresh()` to initiate a call to the `vehicleLocations` data service.
+4. Once the call is completed, `VehicleLocationsEffects.refresh$` will dispatch `VehicleLocationsActions.refreshSuccess()` to update `VehicleLocationsState.locations` and `VehicleLocationsState.lastTime`, or will dispatch `VehicleLocationsActions.refreshFailure()` to populate `VehicleLocationsState.error` with the error returned from the service call. In either case, the `loading` indicator is turned to `false`.
+
+---
 
 
 NgRx implements the [Redux pattern](https://dev.to/hemanth/explain-redux-like-im-five) using Observables to simplify application state to plain objects. With NgRx, application state is updated by a series of _Actions_, _Reducers_, and _Effects_.
@@ -59,11 +110,7 @@ Actions are commands that are _dispatched_ by components (or services). Dispatch
 
 The combination of Actions, Reducers, Effects, and (application_ State colloquially refered to as a _store_. Frequently, application state is split into _slices_, each slice representing a logical portion of a whole application state.
 
-### Integration Steps
 
-NgRx was integrated post-Angular update by running the Angular CLI command `ng add @ngrx/store`. This command scaffolds an empty app store.
-
-In order to add side-effects to the store's Actions, the package `@ngrx/effects` was added to BusSchedule.
 
 ### Defining Application State
 
@@ -86,11 +133,7 @@ Not to create state for Route Options:
 
 
 https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/
-provide an Observable-like pattern for decoupled component interaction
-provide a client container for temporary UI state
-provide a cache for avoiding excessive HTTP requests
-provide a solution for concurrent data modification by multiple actors
-provide a hook for tooling
+
 
 
 Here is a suggestion: unless you have a concurrent data modification scenario, consider starting to build your application with some plain RxJs services, leveraging local services and the dependency injection system.
