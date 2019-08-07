@@ -93,13 +93,19 @@ By combining the use of `RoutesActions` and `getRoutes`, `RoutesService` is no l
 * `loading` - A boolean indication of whether or not the application is loading data from the `vehicleLocations` data service.
 * `locations` - A collection of vehicle locations cached from the result of the `vehicleLocations` data service.
 
-The primary action `VehicleLocations.refresh():
+The primary action `VehicleLocations.refresh()`:
 
 1. Sets the `loading` indicator to true.
 2. Runs the effect `VehicleLocationsEffects.refresh$`.
       1. This effect selects `agency` and `lastTime` from application state, using selectors `getAgency` and `getLastUpdateTime`. These values are used as parameters in the next step.
 3. `VehicleLocationsEffects.refresh$` calls `VehicleLocationsService.refresh()` to initiate a call to the `vehicleLocations` data service.
 4. Once the call is completed, `VehicleLocationsEffects.refresh$` will dispatch `VehicleLocationsActions.refreshSuccess()` to update `VehicleLocationsState.locations` and `VehicleLocationsState.lastTime`, or will dispatch `VehicleLocationsActions.refreshFailure()` to populate `VehicleLocationsState.error` with the error returned from the service call. In either case, the `loading` indicator is turned to `false`.
+
+The selector `getVehicleLocations` returns `Observable<Array<VehicleLocation>>`.
+
+By combining the use of `VehicleLocationsActions` and `getVehicleLocations`, `VehicleLocationsService` is no longer a dependency in `VehicleLocationsMap`.
+
+### Route Options (not part of store)
 
 ---
 
