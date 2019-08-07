@@ -133,71 +133,44 @@ In short, if Route Options were added to the store with it's current implementat
 
 ## Best Practices
 
+In order to follow NgRx's Best Practices, BusSchedule's file structure has been updated to reflect the following (starting from `src/app`):
 
 ```
-├── app
+ ├── app
  │ ├── app-routing.module.ts
- │ ├── app.component.css
+ │ ├── app.component.scss
  │ ├── app.component.html
  │ ├── app.component.ts
+ │ ├── app.component.spec.ts
  │ ├── app.module.ts
- │ ├── components
- │ ├── containers
- │ │    └── my-feature
- │ │         ├── my-feature.component.css
- │ │         ├── my-feature.component.html
- │ │         └── my-feature.component.ts
- │ ├── models
- │ │    ├── index.ts
- │ │    └── my-model.ts
- │ │    └── user.ts
- │ ├── root-store
- │ │    ├── index.ts
- │ │    ├── root-store.module.ts
- │ │    ├── selectors.ts
- │ │    ├── state.ts
- │ │    └── my-feature-store
- │ │    |    ├── actions.ts
- │ │    |    ├── effects.ts
+ │ ├── material.module.ts
+ │ ├── core
+ │ │    └── actions
  │ │    |    ├── index.ts
- │ │    |    ├── reducer.ts
- │ │    |    ├── selectors.ts
- │ │    |    ├── state.ts
- │ │    |    └── my-feature-store.module.ts
- │ │    └── my-other-feature-store
- │ │         ├── actions.ts
- │ │         ├── effects.ts
- │ │         ├── index.ts
- │ │         ├── reducer.ts
- │ │         ├── selectors.ts
- │ │         ├── state.ts
- │ │         └── my-other-feature-store.module.ts
- │ └── services
- │      └── data.service.ts
- ├── assets
- ├── browserslist
- ├── environments
- │ ├── environment.prod.ts
- │ └── environment.ts
- ├── index.html
- ├── main.ts
- ├── polyfills.ts
- ├── styles.css
- ├── test.ts
- ├── tsconfig.app.json
- ├── tsconfig.spec.json
- └── tslint.json
+ │ │    |    ├── routes.actions.ts
+ │ │    |    └── vehicle-locations.actions.ts
+ │ │    └── effects
+ │ │    |    ├── index.ts
+ │ │    |    ├── routes.effects.ts
+ │ │    |    └── vehicle-locations.effects.ts
+ | │    └── models
+ │ │    |    ├── route.ts
+ │ │    |    ├── vehicle-location.ts
+ │ │    |    └── vehicle-locations-response.ts
+ | │    └── reducers
+ │ │    |    ├── routes.reducer.ts
+ │ │    |    └── vehicle-locations.reducer.ts
+ │ │    └── services
+ │ │    |    ├── route-options.service.ts
+ │ │    |    ├── route-options.service.spec.ts
+ │ │    |    ├── routes.service.ts
+ │ │    |    ├── routes.service.spec.ts
+ │ │    |    ├── vehicle-locations.service.spec.ts
+ │ │    |    └── vehicle-locations.service.ts
+ | ├── core.module.ts
+ | ├── module-import-guard.ts
+ │ ├── reducers
+ │ │    └── index.ts
+ │ ├── shared
+ │ │    └── {unchanged}
  ```
-
-
-### Why Update?
-9. Document @ngrx folder structure best practices
-10. Mention barrels
-11. Refactor App Component to remove references to services
-12. Service tests are now pure, no service-level variables are used as dependencies.
-13. Use folder structuring based off NgRX best practice (to make it my own).
-14. Reduce services out of most components to replace with actions.
-15. We would still be reliant on using RouteOptions service calls, unless we stored all selected routes in store -- which we might want to do...
-
-TODO:
-1. Update tests
