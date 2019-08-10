@@ -9,7 +9,7 @@ While Angular's official update guide **does not** recommend updating across mul
 Specific steps taken on BusSchedule are as follows:
 
 1. Using a new sample Angular 8 project, re-align existing npm package dependency versions for dependencies present across both projects.
-2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` were added that facilitate Angular 8 but were not present in the existing project.
+2. Packages `@angular/cdk`, `tslib`, and `@angular-devkit/build-angular` have been added as they are dependencies of Angular 8 but were not present in the existing project.
 3. Terminal command `ng update` was run to re-scaffold the existing project to match Angular 8's specifications.
 4. Update `angular-2-local-storage` from `1.0.1` to `3.0.1` in order to compile alongside the rest of the updated dependencies.
 5. Packages `timers` and `stream` were added as they are required for `xml2js` and `sax` respectively.
@@ -21,12 +21,12 @@ Specific steps taken on BusSchedule are as follows:
 Re-aligning [Angular Material](https://material.angular.io/) with it's updated library required several steps:
 
 1. `AngularMaterialModule` created in the root app folder (`/src/app/material.module.ts`). This module `imports` and `exports` individual Angular Material components used within BusSchedule.
-2. Modules requiring components from Angular Material updated to include `AngularMaterialModule` import dependency.
+2. Application modules requiring components from Angular Material updated to include `AngularMaterialModule` import dependency.
 3. HTML elements starting with `md` changed to start with `mat` to align with updated Angular Material specifications.
 4. Material menu icon residing in `<bus-root>` updated to address styling issues.
 
 
-## Migrating to NgRx
+## Integrating NgRx
 
 [NgRx](https://ngrx.io/) enables reactive extensions for Angular. NgRx implements the Redux pattern using RxJS observables. By implementing the Redux pattern, components and other pieces of software _react_ to changes in data instead of asking for changes.
 
@@ -34,7 +34,7 @@ The main purpose to using NgRx is to provide a predictable state container, base
 
 1. **Single Source of Truth** - State is handled in one object and one place, making debugging or  making modifications easier.
 2. **Read-Only State** - State is never directly changed. Instead, actions are dispatched to a centralized location where changes are made.
-3. **State is Changed by Pure Functions** - State in NgRx is immutable. When these pure functions (reducers) changes something in the state, a new state object is returned.
+3. **State is Changed by Pure Functions** - State in NgRx is immutable. When these pure functions (reducers) change something in the state, a new state object is returned.
 
 ### Terminology and Concepts
 
@@ -51,7 +51,7 @@ When utilizing NgRx as a store solution, the following benefits are provided:
 1. An Observable-like pattern for decoupled component interaction.
 2. A client container for temporary UI state.
 3. A cache provided for avoiding excessive HTTP requests.
-4. A solution for concurrent data modification by multiple actors
+4. A solution for concurrent data modification by multiple actors.
 
 ### Installation Steps
 
@@ -61,7 +61,7 @@ In order to add side-effects to the store's Actions, the package `@ngrx/effects`
 
 ## BusSchedule Store
 
-Two data "slices" constitute the total BusSchedule application state: `RoutesState` and `VehicleLocationState`. Notably missing from BusSchedule's store is any "Route Options" functionality. The rationale to exclude Route Options from the store can be found below after each slice's documented section.
+Two data "slices" constitute BusSchedule application state: `RoutesState` and `VehicleLocationState`. Notably missing from BusSchedule's store is any "Route Options" functionality. The rationale to exclude Route Options from the store can be found below after each slice's documented section.
 
 ### RoutesState
 
@@ -106,30 +106,25 @@ By combining the use of `VehicleLocationsActions` and `getVehicleLocations`, `Ve
 
 ### Route Options (not part of store)
 
-The portion of BusSchedule that handles Route Options is **not** a good candidate to consider moving to a Redux-based architecture (in this case, NgRx). When migrating an existing application to NgRx, it is important to note which portion(s) of functionality can benefit from this type of architecture.
+The portion of BusSchedule that handles Route Options is **not** a good candidate to consider moving to a Redux-based architecture (in this case, NgRx). When integrating NgRx to an existing application, it is important to note which portion(s) of functionality can benefit from this type of architecture.
 
 To quote [Angular University](https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/):
 
 > You’ll know when you need [NgRx]. If you aren’t sure if you need it, you don’t need it.
 
-Routes and Vehicle Locations are two obvious candidates to use NgRx. They perform asychronous operations that would benefit from being cached as part of an application state, and actions that would allow side-effects, such as presenting a user with a prompt to retry an action if it failed.
+Routes and Vehicle Locations are two obvious candidates to use NgRx. They perform asychronous operations that benefit from being cached as part of an application state, and their actions easily lend themselves to typical NgRx side-effects, such as presenting a user with a prompt to retry an action if it failed.
 
-Additionally, Route Options functionality is stricly synchronous and migrating that portion of functionality would create unneccesary overhead. Asynchronous data-sources make much more obvious use cases for NgRx.
+While actions like hiding and showing a route appear to be prime candidates for the NgRx architecture, the majority of the "Route Options" functionality is performant enough as-is, and adding NgRx would add extra complexity:
 
->Here is a suggestion: unless you have a concurrent data modification scenario, consider starting to build your application with some plain RxJs services, leveraging local services and the dependency injection system.
->
->Then if the need arises, we can always [migrate] part of the application into a store if a use case comes up.
+1. Loading local storage is a syncrhonous call made by the `RouteOptionsService` constructor, initializing the user's storage during app startup. Following an NgRx architecture, an Action would be required outside of the service to load local storage into our app state, therefore losing the "automatic" loading of local storage and adding a new dependency that the app lifecycle needs to maintain.
+2. NgRx is built around pure functions. In the case of showing/hiding a route using NgRx architecture, it is simple to use a pure function to update this portion of app state. However, an un-intended side-effect is that local storage needs to be updated on either of those actions. Therefore, to add showing/hiding into our app store, we would require an action for each as well as at least one Effect to handle updating local storage, which is additional overhead.
+3. `shouldDisplayRoute` is a simple O(1) runtime method in `RouteOptionsService` called several times within the lifecycle of BusSchedule. Following an NgRx architecture, however `shouldDisplayRoute` is refactored, it would have to become part of an Observable stream, which beyond a development complexity also contains a higher runtime.
 
-BusSchedule existed as a fully-functional, performant application before updating Angular 8. Therefore, portions of the app were [migrated] to NgRx, rather than the whole.
+This is not to say that Route Options functionality cannot be migrated into our NgRx store at a later date:
 
-With respect to the existing codebase, the following reasons reflect the decision to forgo migrating Route Options to the application state:
+Once again, from Angular University:
 
-1. Loading local storage is a syncrhonous action initialized during app startup (when `RouteOptionsService` intializes). Using a Redux-based architecture, one would move this portion of functionality into an Action, which would rely on a component to dispatch it. Therefore losing the "automatic" loading of local storage and introducing a new dependency (being the "Load User Storage" action).
-2. Showing and Hiding routes appear to be obvious candidates for Actions the store can dispatch, however, each action updates local storage. To add Show/Hide Route Actions to the store would require creating an effect, which is additional an additional overhead.
-3. `RouteItem` and `VehicleLocationMap` utilize the simple method `RouteOptions.shouldDisplayRoute` to determine whether certain portions of the UI should show. To remove the dependency to `RouteOptionsService` from these components would require additionally complex logic by introducing Observables into the mix.
-4. There are _several_ calls to `shouldDisplayRoute` made during the lifecycle of BusSchedule. By removing the dependency to `RouteOptionsService`, we force the store to dispatch the same action several times concurrently -- with each dispatched action requiring an effect to run the additional logic required from `RouteOptionsService`.
-
-In short, if Route Options were added to the store with it's current implementation, it would introduce overhead without gaining any benefits.
+> [I]f the need arises, we can always [migrate] part of the application into a store if a use case comes up.
 
 ## Best Practices
 
