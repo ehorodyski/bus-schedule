@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { ReplaySubject, Observable, of } from 'rxjs';
+import { ReplaySubject, Observable, of, throwError } from 'rxjs';
 
 import { RoutesEffects } from './routes.effects';
 import { RoutesActions } from '../actions/';
@@ -14,6 +14,7 @@ class RoutesServiceMock {
 describe('RoutesEffects', () => {
   let actions: ReplaySubject<any>;
   let effects: RoutesEffects;
+  let service: RoutesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,6 +25,7 @@ describe('RoutesEffects', () => {
       ]
     });
     effects = TestBed.get(RoutesEffects);
+    service = TestBed.get(RoutesService);
   });
 
   it('should be created', async () => {
@@ -31,12 +33,22 @@ describe('RoutesEffects', () => {
   });
 
   describe('refresh$', () => {
-    it('dispatches RoutesActions.refreshSuccess', async(() => {
+    it('dispatches RoutesActions.refreshSuccess on success', async(() => {
       actions = new ReplaySubject(1);
       const action = RoutesActions.refresh({ agency: 'sf-muni' });
       actions.next(action);
       effects.refresh$.subscribe(res => {
         expect(res.type).toBe('[Routes] Refresh Success');
+      });
+    }));
+
+    it('dispatches RoutesActions.refreshFailure on failure', async(() => {
+      spyOn(service, 'refresh').and.returnValue(throwError('error'));
+      actions = new ReplaySubject(1);
+      const action = RoutesActions.refresh({ agency: 'sf-muni' });
+      actions.next(action);
+      effects.refresh$.subscribe(res => {
+        expect(res.type).toBe('[Routes] Refresh Failure');
       });
     }));
   });
